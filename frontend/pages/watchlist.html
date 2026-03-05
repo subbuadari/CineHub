@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CineHub 2.0 | Your Watchlist</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(236, 91, 19, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(236, 91, 19, 0.2);
+        }
+
+        .cinematic-glow {
+            background: radial-gradient(circle at 50% -20%, rgba(236, 91, 19, 0.15) 0%, rgba(34, 22, 16, 0) 60%);
+        }
+    </style>
+    <script src="../js/api.js"></script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden cinematic-glow">
+        <!-- Top Navigation Bar -->
+        <header
+            class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/20 px-6 md:px-20 py-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-3 text-primary">
+                    <div class="size-8">
+                        <svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h1 class="text-xl font-black leading-tight tracking-tight uppercase">CineHub 2.0</h1>
+                </div>
+                <nav class="hidden lg:flex items-center gap-8">
+                    <a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-semibold transition-colors"
+                        href="homedashboard.html">Home</a>
+                    <a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-semibold transition-colors"
+                        href="advancedfilters.html">Movies</a>
+                    <a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-semibold transition-colors"
+                        href="#">TV Shows</a>
+                    <a class="text-primary text-sm font-bold border-b-2 border-primary pb-1" href="watchlist.html">My
+                        List</a>
+                </nav>
+            </div>
+            <div class="flex flex-1 justify-end gap-6 items-center">
+                <label class="hidden md:flex flex-col min-w-40 h-10 max-w-64">
+                    <div class="flex w-full flex-1 items-stretch rounded-full h-full glass-card px-4 border-primary/10">
+                        <div class="text-primary flex items-center justify-center pr-2">
+                            <span class="material-symbols-outlined text-xl">search</span>
+                        </div>
+                        <input class="w-full bg-transparent border-none focus:ring-0 text-sm placeholder:text-slate-500"
+                            placeholder="Search movies..." type="text" />
+                    </div>
+                </label>
+                <div class="flex gap-3">
+                    <button onclick="TMDB.sharePage()"
+                        class="flex items-center justify-center rounded-full size-10 glass-card text-primary transition-all hover:bg-primary/20">
+                        <span class="material-symbols-outlined">share</span>
+                    </button>
+                    <button
+                        class="flex items-center justify-center rounded-full size-10 glass-card text-primary transition-all hover:bg-primary/20">
+                        <span class="material-symbols-outlined">notifications</span>
+                    </button>
+                    <a href="profilepage.html"
+                        class="size-10 rounded-full border-2 border-primary overflow-hidden hover:opacity-80 transition-opacity user-avatar-link">
+                        <img class="w-full h-full object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPNPLuW01hw7QSB8OW-DvpMKn7PJVrwBJaiKh1dYiUfU4IKgaqWc37Sgz0E_ptxAe51ErdJPYUTKjQtyjXQX47C7ziudR8dfWAaCu4rH75MWWXLW5m_SFo8s5t-WCjhvnqOSVbpcOmjaK1MqxVg-PXoYPBNt7hcBWuBS9uo-PEXNM5v6hVTugl65FIJ-0HPY8tbG46qHoilKZhuN6k0AJujafnx5xv4ES5bXi5h0-oL_W0yXSp6wZ2dQImwL_hpyUir0pkSzOd-kw"
+                            alt="User Profile" />
+                    </a>
+                </div>
+            </div>
+        </header>
+        <main class="max-w-[1280px] mx-auto w-full px-6 py-8 flex flex-col gap-8">
+            <!-- Header Section -->
+            <div class="flex flex-col md:flex-row justify-between items-end gap-4">
+                <div class="flex flex-col gap-1">
+                    <h2 class="text-slate-900 dark:text-slate-50 text-4xl font-black leading-tight tracking-tight">Your
+                        Watchlist</h2>
+                    <p id="watchlist-count" class="text-primary font-medium">0 Titles curated for you</p>
+                </div>
+            </div>
+            <!-- Statistics Bar -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="flex flex-col gap-2 rounded-2xl p-6 glass-card border-primary/20">
+                    <div class="flex items-center gap-2 text-primary mb-1">
+                        <span class="material-symbols-outlined text-sm">bookmark</span>
+                        <p class="text-sm font-bold uppercase tracking-wider opacity-80">Total Saved</p>
+                    </div>
+                    <p id="stat-total" class="text-slate-900 dark:text-white text-3xl font-black">0</p>
+                </div>
+                <div class="flex flex-col gap-2 rounded-2xl p-6 glass-card border-primary/20">
+                    <div class="flex items-center gap-2 text-primary mb-1">
+                        <span class="material-symbols-outlined text-sm">star</span>
+                        <p class="text-sm font-bold uppercase tracking-wider opacity-80">Avg. Rating</p>
+                    </div>
+                    <p id="stat-rating" class="text-slate-900 dark:text-white text-3xl font-black">0.0</p>
+                </div>
+                <div class="flex flex-col gap-2 rounded-2xl p-6 glass-card border-primary/20">
+                    <div class="flex items-center gap-2 text-primary mb-1">
+                        <span class="material-symbols-outlined text-sm">category</span>
+                        <p class="text-sm font-bold uppercase tracking-wider opacity-80">Top Genre</p>
+                    </div>
+                    <p id="stat-genre" class="text-slate-900 dark:text-white text-3xl font-black">N/A</p>
+                </div>
+                <div class="flex flex-col gap-2 rounded-2xl p-6 glass-card border-primary/20">
+                    <div class="flex items-center gap-2 text-primary mb-1">
+                        <span class="material-symbols-outlined text-sm">schedule</span>
+                        <p class="text-sm font-bold uppercase tracking-wider opacity-80">Watch Time</p>
+                    </div>
+                    <p id="stat-time" class="text-slate-900 dark:text-white text-3xl font-black">0h 0m</p>
+                </div>
+            </div>
+            <!-- Movie Grid -->
+            <div id="watchlist-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                <!-- Dynamic Content -->
+                <div class="col-span-full py-20 text-center opacity-50">
+                    <span class="material-symbols-outlined text-6xl mb-4 block">bookmark_add</span>
+                    <p class="text-xl font-bold">Your watchlist is empty</p>
+                    <p>Start adding movies to keep track of what you want to watch!</p>
+                </div>
+            </div>
+        </main>
+        <footer class="border-t border-primary/10 py-10 bg-background-light dark:bg-background-dark/80 mt-auto">
+            <div class="max-w-[1280px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-2 text-primary opacity-60">
+                    <span class="material-symbols-outlined">movie_filter</span>
+                    <p class="font-bold uppercase tracking-widest text-xs">CineHub 2.0 © 2024</p>
+                </div>
+                <div class="flex gap-8 text-sm font-medium text-slate-500 dark:text-slate-400">
+                    <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+                    <a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+                    <a class="hover:text-primary transition-colors" href="#">Support</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Authentication check
+        if (!localStorage.getItem('cinehub_token')) {
+            window.location.href = '../index.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWatchlist();
+        });
+
+        async function renderWatchlist() {
+            const grid = document.getElementById('watchlist-grid');
+            const countLabel = document.getElementById('watchlist-count');
+
+            try {
+                // Show loading state
+                grid.innerHTML = '<div class="col-span-full py-20 text-center"><span class="material-symbols-outlined animate-spin text-4xl text-primary">sync</span></div>';
+
+                const watchlist = await TMDB.getWatchlist();
+
+                // Update Stats
+                countLabel.textContent = `${watchlist.length} Titles curated for you`;
+                document.getElementById('stat-total').textContent = watchlist.length;
+
+                if (watchlist.length === 0) {
+                    grid.innerHTML = `
+                        <div class="col-span-full py-20 text-center opacity-50">
+                            <span class="material-symbols-outlined text-6xl mb-4 block">bookmark_add</span>
+                            <p class="text-xl font-bold">Your watchlist is empty</p>
+                            <p>Start adding movies to keep track of what you want to watch!</p>
+                            <a href="advancedfilters.html" class="mt-4 inline-block bg-primary text-white px-6 py-2 rounded-xl font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform">Explore Movies</a>
+                        </div>
+                    `;
+                    document.getElementById('stat-rating').textContent = "0.0";
+                    document.getElementById('stat-genre').textContent = "N/A";
+                    document.getElementById('stat-time').textContent = "0h 0m";
+                    return;
+                }
+
+                // Stats calculation (using available data from backend schema)
+                // Note: The backend schema stores movieId, title, posterPath. 
+                // Full details like rating/genres/runtime would require separate TMDB calls or richer schema.
+                // For now, let's keep it simple or use defaults since this is a migration step.
+                document.getElementById('stat-rating').textContent = "N/A";
+                document.getElementById('stat-genre').textContent = "Saved";
+                document.getElementById('stat-time').textContent = `${watchlist.length * 2}h+`;
+
+                grid.innerHTML = '';
+                watchlist.forEach(movie => {
+                    const card = document.createElement('div');
+                    card.className = "group relative flex flex-col gap-3";
+                    card.innerHTML = `
+                        <div onclick="window.location.href='movieDetails.html?id=${movie.movieId}'" class="cursor-pointer relative w-full aspect-[2/3] overflow-hidden rounded-2xl shadow-2xl transition-transform duration-300 group-hover:scale-[1.02]">
+                            <div class="absolute inset-0 bg-cover bg-center" style='background-image: url("${TMDB.IMG_URL}${movie.posterPath}")'></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
+                                <div class="flex gap-2">
+                                    <button onclick="event.stopPropagation(); removeMovie(this, '${movie.movieId}')" class="w-full bg-red-600/20 backdrop-blur-md text-red-500 py-2 rounded-lg flex items-center justify-center gap-1 hover:bg-red-600 hover:text-white transition-colors text-xs font-bold">
+                                        <span class="material-symbols-outlined text-sm">delete</span> Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <h3 class="text-slate-900 dark:text-white font-bold text-lg leading-tight truncate">${movie.title}</h3>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm truncate">Movie</p>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            } catch (err) {
+                console.error('Failed to load watchlist:', err);
+                grid.innerHTML = '<div class="col-span-full py-20 text-center text-red-500">Failed to load watchlist. Please try again.</div>';
+            }
+        }
+
+        async function removeMovie(btn, movieId) {
+            try {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="material-symbols-outlined text-sm animate-spin">sync</span>';
+                await TMDB.removeFromWatchlist(movieId);
+                renderWatchlist();
+            } catch (err) {
+                console.error('Remove failed:', err);
+                alert("Failed to remove movie");
+                btn.disabled = false;
+                btn.innerHTML = '<span class="material-symbols-outlined text-sm">delete</span> Remove';
+            }
+        }
+    </script>
+</body>
+
+</html>

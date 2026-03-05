@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>CineHub 2.0 Admin Analytics</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(236, 91, 19, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(236, 91, 19, 0.1);
+        }
+
+        .dark .glass-card {
+            background: rgba(34, 22, 16, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(236, 91, 19, 0.15);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+    <script>
+        // Admin Access Guard for Analytics
+        if (localStorage.getItem('isAdmin') !== 'true') {
+            alert('Access Denied: Admin privileges required.');
+            window.location.href = 'homedashboard.html';
+        }
+    </script>
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside
+            class="w-72 bg-white dark:bg-background-dark border-r border-slate-200 dark:border-primary/20 flex flex-col fixed h-full z-50">
+            <div class="p-6 flex items-center gap-3">
+                <div class="size-10 bg-primary rounded-xl flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined text-2xl">movie_filter</span>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">CineHub 2.0</h1>
+                    <p class="text-xs text-slate-500 dark:text-primary/60 font-medium">ADMIN CONSOLE</p>
+                </div>
+            </div>
+            <nav class="flex-1 px-4 py-4 space-y-1">
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold"
+                    href="analyticsdashboard.html">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    Dashboard
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-primary/5 transition-colors"
+                    href="analyticsdashboard.html">
+                    <span class="material-symbols-outlined">analytics</span>
+                    Analytics
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-primary/5 transition-colors"
+                    href="homedashboard.html">
+                    <span class="material-symbols-outlined">movie</span>
+                    Movies
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-primary/5 transition-colors"
+                    href="#">
+                    <span class="material-symbols-outlined">group</span>
+                    Users
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-primary/5 transition-colors"
+                    href="#">
+                    <span class="material-symbols-outlined">api</span>
+                    API Settings
+                </a>
+            </nav>
+            <div class="p-4 mt-auto border-t border-slate-200 dark:border-primary/10">
+                <a href="profilepage.html"
+                    class="flex items-center gap-3 p-2 rounded-xl bg-slate-100 dark:bg-primary/5 hover:opacity-80 transition-opacity">
+                    <div class="size-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
+                        <img class="size-full object-cover" data-alt="Admin user profile avatar"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFg0CSf252FD-2AtHJQehdvKTSOtK-pa4Wp1i8gUWdmX2g8NCRsGbqumuGoPFWxa_gNOo5j_8HYQnEcsicrAaveLo7vJTQ1LGlty2t5MkLB3sLBv-N2fWdkN4hEseKdmrMWf9Ckz8ifrdd3LIPkrO02WRDxfZQsQ-eUbOAijpL_hVtwM9_s-oKivUPOoYyjK0hzx5vYGk-ObAJHTylDEaRmBdNi3R2uhglV-6dLcEf5o32se98H_95ETE_sC9IoYDEZuql7ggcp4M" />
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-semibold truncate">Alex Rivera</p>
+                        <p class="text-xs text-slate-500 truncate">Senior Admin</p>
+                    </div>
+                    <span class="material-symbols-outlined text-slate-400 text-sm">settings</span>
+                </a>
+            </div>
+        </aside>
+        <!-- Main Content -->
+        <main class="flex-1 ml-72">
+            <!-- Top Header -->
+            <header
+                class="h-20 flex items-center justify-between px-8 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 dark:border-primary/10">
+                <div class="flex items-center gap-4 flex-1">
+                    <div class="relative w-full max-w-md">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+                        <input
+                            class="w-full pl-10 pr-4 py-2 rounded-xl border-slate-200 dark:border-primary/20 bg-slate-50 dark:bg-primary/5 focus:ring-primary focus:border-primary"
+                            placeholder="Search analytics, movies, or reports..." type="text" />
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button
+                        class="size-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-primary/10 text-slate-600 dark:text-slate-300 relative">
+                        <span class="material-symbols-outlined">notifications</span>
+                        <span class="absolute top-2 right-2 size-2 bg-primary rounded-full"></span>
+                    </button>
+                    <button
+                        class="size-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-primary/10 text-slate-600 dark:text-slate-300">
+                        <span class="material-symbols-outlined">dark_mode</span>
+                    </button>
+                </div>
+            </header>
+            <!-- Dashboard Content -->
+            <div class="p-8 space-y-8">
+                <!-- Title & Filters -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div>
+                        <h2 class="text-3xl font-extrabold tracking-tight">Analytics Dashboard</h2>
+                        <p class="text-slate-500 dark:text-slate-400 mt-1">Real-time data synchronization with CineHub
+                            2.0 API</p>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <div
+                            class="flex items-center bg-white dark:bg-primary/10 border border-slate-200 dark:border-primary/20 rounded-xl px-3 py-2 text-sm font-medium">
+                            <span class="material-symbols-outlined text-primary text-lg mr-2">calendar_today</span>
+                            Year: 2024
+                            <span class="material-symbols-outlined text-slate-400 ml-2">expand_more</span>
+                        </div>
+                        <div
+                            class="flex items-center bg-white dark:bg-primary/10 border border-slate-200 dark:border-primary/20 rounded-xl px-3 py-2 text-sm font-medium">
+                            <span class="material-symbols-outlined text-primary text-lg mr-2">theater_comedy</span>
+                            Genre: All
+                            <span class="material-symbols-outlined text-slate-400 ml-2">expand_more</span>
+                        </div>
+                        <div
+                            class="flex items-center bg-white dark:bg-primary/10 border border-slate-200 dark:border-primary/20 rounded-xl px-3 py-2 text-sm font-medium">
+                            <span class="material-symbols-outlined text-primary text-lg mr-2">star_rate</span>
+                            Rating: 4.0+
+                            <span class="material-symbols-outlined text-slate-400 ml-2">expand_more</span>
+                        </div>
+                        <button
+                            class="bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-xl font-bold flex items-center gap-2 transition-all">
+                            <span class="material-symbols-outlined text-lg">download</span>
+                            Export
+                        </button>
+                    </div>
+                </div>
+                <!-- KPI Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+                    <div class="glass-card p-6 rounded-2xl flex flex-col">
+                        <div
+                            class="size-10 rounded-lg bg-primary/20 text-primary flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined">movie</span>
+                        </div>
+                        <p class="text-sm font-semibold text-slate-500 dark:text-slate-400">Total Movies</p>
+                        <div class="flex items-baseline gap-2 mt-1">
+                            <span class="text-2xl font-bold">12,450</span>
+                            <span class="text-xs font-bold text-emerald-500">+12%</span>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl flex flex-col">
+                        <div
+                            class="size-10 rounded-lg bg-primary/20 text-primary flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined">bookmark_heart</span>
+                        </div>
+                        <p class="text-sm font-semibold text-slate-500 dark:text-slate-400">Watchlist Saves</p>
+                        <div class="flex items-baseline gap-2 mt-1">
+                            <span class="text-2xl font-bold">85.2K</span>
+                            <span class="text-xs font-bold text-emerald-500">+5.4%</span>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl flex flex-col">
+                        <div
+                            class="size-10 rounded-lg bg-primary/20 text-primary flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined">local_fire_department</span>
+                        </div>
+                        <p class="text-sm font-semibold text-slate-500 dark:text-slate-400">Top Genre</p>
+                        <div class="flex items-baseline gap-2 mt-1">
+                            <span class="text-2xl font-bold">Sci-Fi</span>
+                            <span class="text-xs font-bold text-slate-400">Stable</span>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl flex flex-col">
+                        <div
+                            class="size-10 rounded-lg bg-primary/20 text-primary flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined">grade</span>
+                        </div>
+                        <p class="text-sm font-semibold text-slate-500 dark:text-slate-400">Avg Rating</p>
+                        <div class="flex items-baseline gap-2 mt-1">
+                            <span class="text-2xl font-bold">4.2/5</span>
+                            <span class="text-xs font-bold text-emerald-500">+0.2%</span>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl flex flex-col">
+                        <div
+                            class="size-10 rounded-lg bg-primary/20 text-primary flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined">api</span>
+                        </div>
+                        <p class="text-sm font-semibold text-slate-500 dark:text-slate-400">API Calls</p>
+                        <div class="flex items-baseline gap-2 mt-1">
+                            <span class="text-2xl font-bold">1.2M</span>
+                            <span class="text-xs font-bold text-rose-500">-2.1%</span>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl flex flex-col">
+                        <div
+                            class="size-10 rounded-lg bg-primary/20 text-primary flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined">group</span>
+                        </div>
+                        <p class="text-sm font-semibold text-slate-500 dark:text-slate-400">Active Users</p>
+                        <div class="flex items-baseline gap-2 mt-1">
+                            <span class="text-2xl font-bold">14.8K</span>
+                            <span class="text-xs font-bold text-emerald-500">+18%</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Main Charts Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+                    <!-- Line Chart: Release Trend -->
+                    <div class="glass-card p-8 rounded-3xl xl:col-span-2">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h3 class="text-lg font-bold">Release Year Trend</h3>
+                                <p class="text-sm text-slate-500">Frequency of movie releases over time</p>
+                            </div>
+                            <span class="material-symbols-outlined text-slate-400 cursor-pointer">more_vert</span>
+                        </div>
+                        <div class="h-64 flex items-end justify-between gap-2 relative">
+                            <!-- Simulated Chart Grid -->
+                            <div class="absolute inset-0 flex flex-col justify-between opacity-10 pointer-events-none">
+                                <div class="border-t border-slate-400 w-full"></div>
+                                <div class="border-t border-slate-400 w-full"></div>
+                                <div class="border-t border-slate-400 w-full"></div>
+                                <div class="border-t border-slate-400 w-full"></div>
+                            </div>
+                            <!-- Simulated Line Path (using CSS gradients/rects) -->
+                            <div id="year-trend-bars" class="flex-1 flex items-end h-full gap-4 px-4">
+                                <div class="flex-1 flex flex-col items-center gap-2">
+                                    <div
+                                        class="w-full bg-gradient-to-t from-primary/10 to-primary/40 rounded-t-lg h-[40%] relative group">
+                                        <div
+                                            class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                            2020: 840</div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-500">2020</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-2">
+                                    <div
+                                        class="w-full bg-gradient-to-t from-primary/10 to-primary/40 rounded-t-lg h-[55%] relative group">
+                                        <div
+                                            class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                            2021: 1.1K</div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-500">2021</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-2">
+                                    <div
+                                        class="w-full bg-gradient-to-t from-primary/10 to-primary/40 rounded-t-lg h-[45%] relative group">
+                                        <div
+                                            class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                            2022: 920</div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-500">2022</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-2">
+                                    <div
+                                        class="w-full bg-gradient-to-t from-primary/10 to-primary/40 rounded-t-lg h-[75%] relative group">
+                                        <div
+                                            class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                            2023: 1.6K</div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-500">2023</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-2">
+                                    <div class="w-full bg-primary rounded-t-lg h-[90%] relative group">
+                                        <div
+                                            class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                            2024: 2.1K</div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-500 font-bold">2024</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Pie Chart: Genre Distro -->
+                    <div class="glass-card p-8 rounded-3xl">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h3 class="text-lg font-bold">Movies by Genre</h3>
+                                <p class="text-sm text-slate-500">Global catalog distribution</p>
+                            </div>
+                        </div>
+                        <div class="relative size-56 mx-auto mb-8">
+                            <!-- Simulated Pie/Donut Chart -->
+                            <div
+                                class="size-full rounded-full border-[24px] border-primary/10 border-t-primary border-l-primary/60 border-r-primary/30 relative flex items-center justify-center">
+                                <div class="flex flex-col items-center">
+                                    <span id="genre-pct" class="text-2xl font-black">42%</span>
+                                    <span id="genre-label"
+                                        class="text-[10px] uppercase font-bold text-slate-500">Sci-Fi</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="genre-legend" class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <span class="size-2 rounded-full bg-primary"></span>
+                                    <span class="text-sm font-medium">Sci-Fi</span>
+                                </div>
+                                <span class="text-sm font-bold">42%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <span class="size-2 rounded-full bg-primary/60"></span>
+                                    <span class="text-sm font-medium">Action</span>
+                                </div>
+                                <span class="text-sm font-bold">28%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <span class="size-2 rounded-full bg-primary/30"></span>
+                                    <span class="text-sm font-medium">Drama</span>
+                                </div>
+                                <span class="text-sm font-bold">15%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <span class="size-2 rounded-full bg-primary/10"></span>
+                                    <span class="text-sm font-medium">Others</span>
+                                </div>
+                                <span class="text-sm font-bold">15%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Bar Chart: Rating Distribution -->
+                    <div class="glass-card p-8 rounded-3xl">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h3 class="text-lg font-bold">Rating Distribution</h3>
+                                <p class="text-sm text-slate-500">Average user review spread</p>
+                            </div>
+                        </div>
+                        <div id="rating-dist" class="space-y-4">
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-xs font-bold mb-1">
+                                    <span>5 Stars</span>
+                                    <span>24.5K</span>
+                                </div>
+                                <div class="h-2 w-full bg-slate-200 dark:bg-primary/5 rounded-full overflow-hidden">
+                                    <div class="h-full bg-primary rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-xs font-bold mb-1">
+                                    <span>4 Stars</span>
+                                    <span>18.2K</span>
+                                </div>
+                                <div class="h-2 w-full bg-slate-200 dark:bg-primary/5 rounded-full overflow-hidden">
+                                    <div class="h-full bg-primary/70 rounded-full" style="width: 65%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-xs font-bold mb-1">
+                                    <span>3 Stars</span>
+                                    <span>8.4K</span>
+                                </div>
+                                <div class="h-2 w-full bg-slate-200 dark:bg-primary/5 rounded-full overflow-hidden">
+                                    <div class="h-full bg-primary/40 rounded-full" style="width: 35%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-xs font-bold mb-1">
+                                    <span>2 Stars</span>
+                                    <span>1.2K</span>
+                                </div>
+                                <div class="h-2 w-full bg-slate-200 dark:bg-primary/5 rounded-full overflow-hidden">
+                                    <div class="h-full bg-primary/20 rounded-full" style="width: 10%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-xs font-bold mb-1">
+                                    <span>1 Star</span>
+                                    <span>0.4K</span>
+                                </div>
+                                <div class="h-2 w-full bg-slate-200 dark:bg-primary/5 rounded-full overflow-hidden">
+                                    <div class="h-full bg-slate-400 rounded-full" style="width: 5%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Scatter Plot: Popularity vs Rating -->
+                    <div class="glass-card p-8 rounded-3xl xl:col-span-1">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h3 class="text-lg font-bold">Popularity vs Rating</h3>
+                                <p class="text-sm text-slate-500">Correlation metrics</p>
+                            </div>
+                        </div>
+                        <div id="popularity-scatter"
+                            class="h-64 border-l border-b border-slate-200 dark:border-primary/20 relative m-4">
+                            <!-- Simulated Scatter Dots -->
+                            <div class="absolute size-3 bg-primary rounded-full opacity-60 bottom-[20%] left-[15%]">
+                            </div>
+                            <div class="absolute size-4 bg-primary rounded-full opacity-80 bottom-[40%] left-[35%]">
+                            </div>
+                            <div class="absolute size-2 bg-primary rounded-full opacity-50 bottom-[60%] left-[25%]">
+                            </div>
+                            <div
+                                class="absolute size-5 bg-primary rounded-full opacity-90 bottom-[75%] left-[65%] shadow-lg shadow-primary/20">
+                            </div>
+                            <div class="absolute size-3 bg-primary rounded-full opacity-70 bottom-[55%] left-[85%]">
+                            </div>
+                            <div class="absolute size-2 bg-primary rounded-full opacity-40 bottom-[15%] left-[55%]">
+                            </div>
+                            <div
+                                class="absolute size-4 bg-primary rounded-full opacity-85 bottom-[85%] left-[90%] shadow-lg shadow-primary/30">
+                            </div>
+                            <!-- Axis Labels -->
+                            <div
+                                class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                                Rating Score</div>
+                            <div
+                                class="absolute -left-12 top-1/2 -rotate-90 -translate-y-1/2 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                                Popularity</div>
+                        </div>
+                    </div>
+                    <!-- Donut Chart: Platform Distro -->
+                    <div class="glass-card p-8 rounded-3xl">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h3 class="text-lg font-bold">Platform Distribution</h3>
+                                <p class="text-sm text-slate-500">Where users stream most</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-8 h-full">
+                            <div class="relative size-32 shrink-0">
+                                <svg class="size-full" viewbox="0 0 36 36">
+                                    <path class="stroke-primary/10"
+                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        fill="none" stroke-width="3"></path>
+                                    <path class="stroke-primary"
+                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        fill="none" stroke-dasharray="75, 100" stroke-linecap="round" stroke-width="3">
+                                    </path>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center font-bold text-lg">75%
+                                </div>
+                            </div>
+                            <div class="flex-1 space-y-4">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="size-8 rounded bg-red-600 flex items-center justify-center text-white text-[10px] font-bold">
+                                        NF</div>
+                                    <div class="flex-1">
+                                        <p class="text-xs font-bold">Netflix</p>
+                                        <div class="h-1 w-full bg-slate-200 dark:bg-primary/5 rounded-full mt-1">
+                                            <div class="h-full bg-red-600 rounded-full w-[75%]"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="size-8 rounded bg-blue-600 flex items-center justify-center text-white text-[10px] font-bold">
+                                        AMZ</div>
+                                    <div class="flex-1">
+                                        <p class="text-xs font-bold">Prime Video</p>
+                                        <div class="h-1 w-full bg-slate-200 dark:bg-primary/5 rounded-full mt-1">
+                                            <div class="h-full bg-blue-600 rounded-full w-[45%]"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="size-8 rounded bg-cyan-400 flex items-center justify-center text-white text-[10px] font-bold">
+                                        DS+</div>
+                                    <div class="flex-1">
+                                        <p class="text-xs font-bold">Disney+</p>
+                                        <div class="h-1 w-full bg-slate-200 dark:bg-primary/5 rounded-full mt-1">
+                                            <div class="h-full bg-cyan-400 rounded-full w-[30%]"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Recent Activity Table -->
+                <div class="glass-card rounded-3xl overflow-hidden">
+                    <div class="p-8 border-b border-slate-200 dark:border-primary/10 flex items-center justify-between">
+                        <h3 class="text-lg font-bold">Latest Movie Syncs</h3>
+                        <button class="text-primary text-sm font-bold hover:underline">View All Logs</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr
+                                    class="bg-slate-50 dark:bg-primary/5 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">
+                                    <th class="px-8 py-4">Movie Title</th>
+                                    <th class="px-8 py-4">Genre</th>
+                                    <th class="px-8 py-4">Release Year</th>
+                                    <th class="px-8 py-4">API Source</th>
+                                    <th class="px-8 py-4">Status</th>
+                                    <th class="px-8 py-4 text-right">Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-primary/10">
+                                <tr class="hover:bg-slate-50/50 dark:hover:bg-primary/5 transition-colors">
+                                    <td class="px-8 py-5 font-semibold">Dune: Part Two</td>
+                                    <td class="px-8 py-5">Sci-Fi / Action</td>
+                                    <td class="px-8 py-5 text-slate-500">2024</td>
+                                    <td class="px-8 py-5"><span
+                                            class="px-2 py-1 rounded-md bg-slate-100 dark:bg-primary/10 text-[10px] font-bold">TMDB
+                                            v3</span></td>
+                                    <td class="px-8 py-5"><span
+                                            class="flex items-center gap-1.5 text-emerald-500 font-bold text-xs"><span
+                                                class="size-1.5 rounded-full bg-emerald-500"></span> Synced</span></td>
+                                    <td class="px-8 py-5 text-right font-bold text-primary">4.8</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50 dark:hover:bg-primary/5 transition-colors">
+                                    <td class="px-8 py-5 font-semibold">Poor Things</td>
+                                    <td class="px-8 py-5">Romance / Sci-Fi</td>
+                                    <td class="px-8 py-5 text-slate-500">2023</td>
+                                    <td class="px-8 py-5"><span
+                                            class="px-2 py-1 rounded-md bg-slate-100 dark:bg-primary/10 text-[10px] font-bold">IMDB
+                                            API</span></td>
+                                    <td class="px-8 py-5"><span
+                                            class="flex items-center gap-1.5 text-emerald-500 font-bold text-xs"><span
+                                                class="size-1.5 rounded-full bg-emerald-500"></span> Synced</span></td>
+                                    <td class="px-8 py-5 text-right font-bold text-primary">4.1</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50 dark:hover:bg-primary/5 transition-colors">
+                                    <td class="px-8 py-5 font-semibold">Argylle</td>
+                                    <td class="px-8 py-5">Action / Comedy</td>
+                                    <td class="px-8 py-5 text-slate-500">2024</td>
+                                    <td class="px-8 py-5"><span
+                                            class="px-2 py-1 rounded-md bg-slate-100 dark:bg-primary/10 text-[10px] font-bold">TMDB
+                                            v3</span></td>
+                                    <td class="px-8 py-5"><span
+                                            class="flex items-center gap-1.5 text-amber-500 font-bold text-xs"><span
+                                                class="size-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                                            Pending</span></td>
+                                    <td class="px-8 py-5 text-right font-bold text-primary">3.2</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50 dark:hover:bg-primary/5 transition-colors">
+                                    <td class="px-8 py-5 font-semibold">The Zone of Interest</td>
+                                    <td class="px-8 py-5">War / Drama</td>
+                                    <td class="px-8 py-5 text-slate-500">2023</td>
+                                    <td class="px-8 py-5"><span
+                                            class="px-2 py-1 rounded-md bg-slate-100 dark:bg-primary/10 text-[10px] font-bold">ROTTEN
+                                            API</span></td>
+                                    <td class="px-8 py-5"><span
+                                            class="flex items-center gap-1.5 text-emerald-500 font-bold text-xs"><span
+                                                class="size-1.5 rounded-full bg-emerald-500"></span> Synced</span></td>
+                                    <td class="px-8 py-5 text-right font-bold text-primary">4.5</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script>
+        const _KEY = "6ff5ca7115ec9790da5dae1b2dde4d31";
+        const _BASE = "https://api.themoviedb.org/3";
+        let _gmap = {};
+
+        async function _t(ep, p = {}) {
+            const url = new URL(_BASE + ep);
+            url.searchParams.set('api_key', _KEY);
+            Object.entries(p).forEach(([k, v]) => url.searchParams.set(k, v));
+            const r = await fetch(url);
+            if (!r.ok) return {};
+            return r.json();
+        }
+
+        function _toast(msg, color = 'bg-red-600') {
+            const t = document.createElement('div');
+            t.className = `fixed top-6 right-6 z-[9999] ${color} text-white px-6 py-4 rounded-xl shadow-2xl font-semibold text-sm max-w-sm`;
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 5000);
+        }
+
+        async function loadDashboardData() {
+            try {
+                /* ── 1. Backend Stats (KPI cards) ─────────────── */
+                const stats = await TMDB.getAdminStats();
+                document.querySelectorAll('.glass-card').forEach(card => {
+                    const p = card.querySelector('p');
+                    if (!p) return;
+                    const lbl = p.textContent.trim();
+                    const el = card.querySelector('.text-2xl');
+                    if (!el) return;
+                    if (lbl === 'Total Movies' || lbl === 'Total Users') el.textContent = stats.totalUsers.toLocaleString();
+                    else if (lbl === 'Watchlist Saves') el.textContent = stats.totalWatchlistSaves.toLocaleString();
+                    else if (lbl === 'Avg Rating') el.textContent = stats.avgRating;
+                    else if (lbl === 'Active Users') el.textContent = stats.activeUsers.toLocaleString();
+                });
+
+                /* ── 2. TMDB parallel fetches ─────────────────── */
+                const [genres, trending, popular, y20, y21, y22, y23, y24] = await Promise.all([
+                    _t('/genre/movie/list'),
+                    _t('/trending/movie/week'),
+                    _t('/movie/popular'),
+                    _t('/discover/movie', { primary_release_year: '2020', page: '1' }),
+                    _t('/discover/movie', { primary_release_year: '2021', page: '1' }),
+                    _t('/discover/movie', { primary_release_year: '2022', page: '1' }),
+                    _t('/discover/movie', { primary_release_year: '2023', page: '1' }),
+                    _t('/discover/movie', { primary_release_year: '2024', page: '1' }),
+                ]);
+
+                (genres.genres || []).forEach(g => _gmap[g.id] = g.name);
+                const movies = trending.results || [];
+
+                /* ── 3. Year Trend chart ──────────────────────── */
+                const yearData = [
+                    { year: 2020, count: y20.total_results || 0 },
+                    { year: 2021, count: y21.total_results || 0 },
+                    { year: 2022, count: y22.total_results || 0 },
+                    { year: 2023, count: y23.total_results || 0 },
+                    { year: 2024, count: y24.total_results || 0 },
+                ];
+                const maxY = Math.max(...yearData.map(y => y.count), 1);
+                const barsEl = document.getElementById('year-trend-bars');
+                if (barsEl) {
+                    const maxBarH = 180; // px — max bar height
+                    barsEl.innerHTML = yearData.map((y, i) => {
+                        const h = Math.max(Math.round((y.count / maxY) * maxBarH), 4);
+                        const last = i === yearData.length - 1;
+                        const lbl = y.count >= 1000 ? (y.count / 1000).toFixed(1) + 'K' : y.count;
+                        const barBg = last ? '#ec5b13' : '';
+                        const barStyle = last
+                            ? `background:#ec5b13;`
+                            : `background:linear-gradient(to top,rgba(236,91,19,0.1),rgba(236,91,19,0.4));`;
+                        return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:8px;height:200px">
+                            <div style="width:100%;height:${h}px;${barStyle}border-radius:6px 6px 0 0;position:relative" class="group">
+                                <div style="position:absolute;top:-32px;left:50%;transform:translateX(-50%);background:#0f172a;color:white;font-size:10px;padding:2px 8px;border-radius:4px;white-space:nowrap;opacity:0;transition:opacity 0.2s" class="group-hover:opacity-100">${y.year}: ${lbl}</div>
+                            </div>
+                            <span style="font-size:10px;color:#94a3b8;${last ? 'font-weight:700' : ''}">${y.year}</span>
+                        </div>`;
+                    }).join('');
+                }
+
+                /* ── 4. Genre Distribution chart ─────────────── */
+                const gc = {};
+                movies.forEach(m => (m.genre_ids || []).forEach(id => { const n = _gmap[id] || 'Other'; gc[n] = (gc[n] || 0) + 1; }));
+                const topGenres = Object.entries(gc).sort((a, b) => b[1] - a[1]).slice(0, 4);
+                const gTotal = topGenres.reduce((s, [, c]) => s + c, 0) || 1;
+                const gColors = ['bg-primary', 'bg-primary/60', 'bg-primary/30', 'bg-primary/10'];
+                if (topGenres.length) {
+                    const top = topGenres[0];
+                    const topPct = Math.round((top[1] / gTotal) * 100);
+                    const pEl = document.getElementById('genre-pct');
+                    const lEl = document.getElementById('genre-label');
+                    if (pEl) pEl.textContent = topPct + '%';
+                    if (lEl) lEl.textContent = top[0];
+                    const legEl = document.getElementById('genre-legend');
+                    if (legEl) legEl.innerHTML = topGenres.map(([name, cnt], i) =>
+                        `<div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2"><span class="size-2 rounded-full ${gColors[i]}"></span><span class="text-sm font-medium">${name}</span></div>
+                            <span class="text-sm font-bold">${Math.round((cnt / gTotal) * 100)}%</span>
+                        </div>`).join('');
+                }
+
+                /* ── 5. Popularity vs Rating scatter ─────────── */
+                const scatterEl = document.getElementById('popularity-scatter');
+                if (scatterEl && movies.length) {
+                    const maxPop = Math.max(...movies.map(m => m.popularity || 0), 1);
+                    scatterEl.innerHTML = movies.slice(0, 18).map(m => {
+                        const x = Math.round((m.vote_average / 10) * 84) + 3;
+                        const y = Math.round((m.popularity / maxPop) * 80) + 5;
+                        const sz = Math.min(Math.max(Math.round(m.vote_count / 800), 8), 20);
+                        const op = (0.4 + (m.vote_average / 10) * 0.6).toFixed(2);
+                        return `<div class="absolute bg-primary rounded-full cursor-pointer transition-opacity hover:opacity-100 group"
+                            style="left:${x}%;bottom:${y}%;width:${sz}px;height:${sz}px;opacity:${op}" title="${m.title}">
+                            <div class="absolute -top-7 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[9px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none z-10">${m.title} ★${m.vote_average.toFixed(1)}</div>
+                        </div>`;
+                    }).join('') +
+                        `<div class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-slate-400 font-bold uppercase tracking-wider">Rating Score</div>
+                    <div class="absolute -left-12 top-1/2 -rotate-90 -translate-y-1/2 text-[10px] text-slate-400 font-bold uppercase tracking-wider">Popularity</div>`;
+                }
+
+                /* ── 6. Latest Movies table (TMDB Popular) ───── */
+                const tableBody = document.querySelector('tbody');
+                if (tableBody && popular.results) {
+                    tableBody.innerHTML = popular.results.slice(0, 8).map(m => {
+                        const year = m.release_date ? m.release_date.split('-')[0] : 'N/A';
+                        const genre = m.genre_ids?.[0] ? (_gmap[m.genre_ids[0]] || 'N/A') : 'N/A';
+                        const g2 = m.genre_ids?.[1] ? (_gmap[m.genre_ids[1]] || '') : '';
+                        const rating = m.vote_average ? m.vote_average.toFixed(1) : 'N/A';
+                        return `<tr class="hover:bg-slate-50/50 dark:hover:bg-primary/5 transition-colors">
+                            <td class="px-8 py-5 font-semibold">${m.title}</td>
+                            <td class="px-8 py-5">${genre}${g2 ? ' / ' + g2 : ''}</td>
+                            <td class="px-8 py-5 text-slate-500">${year}</td>
+                            <td class="px-8 py-5"><span class="px-2 py-1 rounded-md bg-slate-100 dark:bg-primary/10 text-[10px] font-bold">TMDB v3</span></td>
+                            <td class="px-8 py-5"><span class="flex items-center gap-1.5 text-emerald-500 font-bold text-xs"><span class="size-1.5 rounded-full bg-emerald-500"></span> Synced</span></td>
+                            <td class="px-8 py-5 text-right font-bold text-primary">${rating}</td>
+                        </tr>`;
+                    }).join('');
+                }
+
+                /* ── 7. Rating Distribution (backend + fallback) ─ */
+                const rdEl = document.getElementById('rating-dist');
+                if (rdEl) {
+                    let starCounts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+                    try {
+                        const dist = await TMDB.getRatingsDistribution();
+                        const tot = Object.values(dist).reduce((s, v) => s + v, 0);
+                        if (tot > 0) {
+                            starCounts = { 5: (dist[9] || 0) + (dist[10] || 0), 4: (dist[7] || 0) + (dist[8] || 0), 3: (dist[5] || 0) + (dist[6] || 0), 2: (dist[3] || 0) + (dist[4] || 0), 1: (dist[1] || 0) + (dist[2] || 0) };
+                        } else {
+                            movies.forEach(m => { const v = m.vote_average || 0; if (v >= 8) starCounts[5]++; else if (v >= 6.5) starCounts[4]++; else if (v >= 5) starCounts[3]++; else if (v >= 3) starCounts[2]++; else starCounts[1]++; });
+                        }
+                    } catch { movies.forEach(m => { const v = m.vote_average || 0; if (v >= 8) starCounts[5]++; else if (v >= 6.5) starCounts[4]++; else if (v >= 5) starCounts[3]++; else if (v >= 3) starCounts[2]++; else starCounts[1]++; }); }
+                    const rTotal = Object.values(starCounts).reduce((s, v) => s + v, 1);
+                    const rColors = ['bg-primary', 'bg-primary/70', 'bg-primary/40', 'bg-primary/20', 'bg-slate-400'];
+                    rdEl.innerHTML = [5, 4, 3, 2, 1].map((s, i) => {
+                        const cnt = starCounts[s] || 0;
+                        const w = Math.max(Math.round((cnt / rTotal) * 100), 2);
+                        const disp = cnt >= 1000 ? (cnt / 1000).toFixed(1) + 'K' : cnt;
+                        return `<div class="space-y-1">
+                            <div class="flex justify-between text-xs font-bold mb-1"><span>${s} Star${s > 1 ? 's' : ''}</span><span>${disp}</span></div>
+                            <div class="h-2 w-full bg-slate-200 dark:bg-primary/5 rounded-full overflow-hidden">
+                                <div class="h-full ${rColors[i]} rounded-full" style="width:${w}%"></div>
+                            </div>
+                        </div>`;
+                    }).join('');
+                }
+
+
+            } catch (err) {
+                console.error('Dashboard error:', err);
+                _toast('Dashboard: ' + err.message);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadDashboardData);
+    </script>
+</body>
+
+</html>

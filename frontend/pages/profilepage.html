@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#1a0f0a",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <title>CineHub 2.0 - Premium Profile</title>
+    <script src="../js/api.js"></script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+        <!-- Top Navigation Bar -->
+        <header
+            class="sticky top-0 z-50 w-full border-b border-primary/20 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 lg:px-20 py-3">
+            <div class="max-w-7xl mx-auto flex items-center justify-between gap-8">
+                <div class="flex items-center gap-8">
+                    <div class="flex items-center gap-3 text-primary">
+                        <span class="material-symbols-outlined text-3xl">movie_filter</span>
+                        <h2 class="text-xl font-bold tracking-tight">CineHub 2.0</h2>
+                    </div>
+                    <nav class="hidden md:flex items-center gap-8">
+                        <a class="text-sm font-medium hover:text-primary transition-colors"
+                            href="homedashboard.html">Home</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors"
+                            href="advancedfilters.html">Movies</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors"
+                            href="watchlist.html">Watchlist</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors text-primary"
+                            href="profilepage.html">Profile</a>
+                    </nav>
+                </div>
+                <div class="flex flex-1 justify-end items-center gap-6">
+                    <div class="relative hidden sm:block max-w-xs w-full">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/60">search</span>
+                        <input
+                            class="w-full bg-primary/10 border-none rounded-xl py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/50 placeholder:text-primary/40"
+                            placeholder="Search movies..." type="text" />
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button class="p-2 rounded-xl bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined">notifications</span>
+                        </button>
+                        <button class="p-2 rounded-xl bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined">settings</span>
+                        </button>
+                        <div class="size-10 rounded-full border-2 border-primary overflow-hidden">
+                            <img class="w-full h-full object-cover" data-alt="Close up profile picture of a young man"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCo4dbzNFWGozkYB4S5m0_FJTizRu86TEKDh_m5zcPxVTR-Bm9KnAKr_O63J6AkK_EiIafnw1VXzL3HdUA47iZE_sZk6-A6rH3ghA_Qv8bYMlMgsl2uRvuyxbktfn51M8cZDPgs_ivIVWec1h5Ueko4afjZ5UBHZtSfOtMcjqtBUTi49BdTo3Ri5aLJfij9_-09yIQrfmgLcPZ1KLn7bhgQa8_zYfsiXOR9NO2N4KN3dH3f-CnZU-1A5yh8y672ouC4_FQisOgLLRI" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="max-w-7xl mx-auto w-full px-6 lg:px-20 py-10">
+            <!-- Profile Header -->
+            <section
+                class="mb-10 flex flex-col md:flex-row items-center md:items-end gap-8 bg-primary/5 p-8 rounded-xl border border-primary/10 backdrop-blur-sm">
+                <div class="relative">
+                    <div class="size-32 md:size-40 rounded-full border-4 border-primary p-1">
+                        <img class="w-full h-full object-cover rounded-full"
+                            data-alt="Large profile picture of Alex Rivera"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrOYMEvnHb9CnlaMLiup8mdMq3d9-oR9uukt0PzYJso8-XBDNpS1RLDhGENR3WtokRslwteHHIJTccaa88w7dBL7-r5Bk4PlJCHyyvroWSSGiWX4zZKf1qsKuYviMOgmTnL1meq21aRla7YUFqfBuqtUyMkxXSsLaRSZUXeVcAd_20jHqfsozmPuUBnnbz0IZQSZLnZkYWocKugUnTT87gK_SiNRYMhsHpopawMy_1syBVRxqwJkQ8vrfs_Ht77Tp73OjM5NL467Q" />
+                    </div>
+                    <button
+                        class="absolute bottom-2 right-2 p-2 bg-primary text-white rounded-full shadow-lg hover:bg-primary/90 transition-transform hover:scale-110">
+                        <span class="material-symbols-outlined text-sm">edit</span>
+                    </button>
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <div class="flex flex-col md:flex-row items-center gap-3 mb-2">
+                        <h1 class="text-3xl font-bold">Alex Rivera</h1>
+                    </div>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-lg mb-4">Cinephile, critic, and visual
+                        storyteller. Obsessed with neo-noir aesthetics and high-concept sci-fi.</p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                        <button onclick="window.location.href='editprofile.html'"
+                            class="bg-primary text-white px-6 py-2 rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all">Edit
+                            Profile</button>
+                        <button onclick="TMDB.sharePage()"
+                            class="bg-primary/10 text-primary border border-primary/20 px-6 py-2 rounded-xl font-bold text-sm hover:bg-primary/20 transition-all">Share
+                            Profile</button>
+                    </div>
+                </div>
+            </section>
+            <!-- KPI Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div class="bg-white dark:bg-primary/5 p-6 rounded-xl border border-primary/10 flex items-center gap-4">
+                    <div class="size-12 rounded-xl bg-primary/20 flex items-center justify-center text-primary">
+                        <span class="material-symbols-outlined">movie</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-slate-500 uppercase tracking-widest">Total Watched</p>
+                        <p id="total-watched-count" class="text-2xl font-bold">0</p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-primary/5 p-6 rounded-xl border border-primary/10 flex items-center gap-4">
+                    <div class="size-12 rounded-xl bg-primary/20 flex items-center justify-center text-primary">
+                        <span class="material-symbols-outlined">bookmarks</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-slate-500 uppercase tracking-widest">Watchlist Count</p>
+                        <p id="total-watchlist-count" class="text-2xl font-bold">0</p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-primary/5 p-6 rounded-xl border border-primary/10 flex items-center gap-4">
+                    <div class="size-12 rounded-xl bg-primary/20 flex items-center justify-center text-primary">
+                        <span class="material-symbols-outlined">grade</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-slate-500 uppercase tracking-widest">Average Rating</p>
+                        <p id="total-average-rating" class="text-2xl font-bold">0.0</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Dashboard Content -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left Column: activity & genres -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Recent Activity -->
+                    <section class="bg-white dark:bg-primary/5 p-8 rounded-xl border border-primary/10">
+                        <div class="flex items-center justify-between mb-8">
+                            <h3 class="text-xl font-bold">Recent Activity</h3>
+                            <button class="text-primary text-sm font-bold">View History</button>
+                        </div>
+                        <div class="space-y-6">
+                            <div
+                                class="relative pl-8 before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-[-24px] before:w-[2px] before:bg-primary/20 last:before:hidden">
+                                <div
+                                    class="absolute left-0 top-1 size-[24px] rounded-full bg-primary border-4 border-background-light dark:border-background-dark">
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="w-16 h-24 rounded-lg overflow-hidden shrink-0 border border-primary/20">
+                                        <img class="w-full h-full object-cover"
+                                            data-alt="Futuristic movie poster abstract"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhJaY0F1dB68dYBj3I0D1bZZ_X3YGt5PJGmIskcMkOxGQJmMN8h-FFyoYWe-U1ied3KBRCD1Pe3QaP8OQ2SOXpN2WN-gR84sFKutMvPzdb7egEe5IeU09TiWZoMc6P6JqPVLHKf9c6279TKTpLyGMv8Us6fvSWYFJHvTsbqpE9JkROjAAuNcZghtuF6qmJZ4m0hogf33J3Pr3QxDFhukQlUg3MlCBQZzyw0MCsx1AeVklyr_WrVkLqqeH4MaWa4ULH0jw0FJP0kY0" />
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-bold">Finished Watching <span class="text-primary">Neon
+                                                Genesis</span></p>
+                                        <p class="text-sm text-slate-500 mb-2">2 hours ago</p>
+                                        <div class="flex items-center gap-1 text-primary">
+                                            <span class="material-symbols-outlined text-sm fill-1">star</span>
+                                            <span class="material-symbols-outlined text-sm fill-1">star</span>
+                                            <span class="material-symbols-outlined text-sm fill-1">star</span>
+                                            <span class="material-symbols-outlined text-sm fill-1">star</span>
+                                            <span class="material-symbols-outlined text-sm">star</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="relative pl-8 before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-[-24px] before:w-[2px] before:bg-primary/20 last:before:hidden">
+                                <div
+                                    class="absolute left-0 top-1 size-[24px] rounded-full bg-primary/30 border-4 border-background-light dark:border-background-dark">
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="w-16 h-24 rounded-lg overflow-hidden shrink-0 border border-primary/20">
+                                        <img class="w-full h-full object-cover" data-alt="Classic film reel imagery"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFkFaMYaUc8CiCTccwHw2NbtwWbDz0nN_zZOMLPjfOkd94DILGBxLipOzbcq6bt53DvPfuxAGqR9SFQZpBMR1lmYwjEL8hoBibmA6LWsjbozPoBcMPfCpQU0UUqFlwjGngL21x7-Xu8QHtKtx2hrhjwT-G5lPMBATS9K_TMlV1UADsEaWCKMg_8Az81icF4Z8eBiqjXAVWHBsItspDhD5_lbArZFzWA4UkOgqbAxFvmaH-9R2sQCsDAUjPxdIJ-aRS-94zTX32lBs" />
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-bold">Added <span class="text-primary">Inception</span> to
+                                            Watchlist</p>
+                                        <p class="text-sm text-slate-500">Yesterday at 11:45 PM</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative pl-8 last:before:hidden">
+                                <div
+                                    class="absolute left-0 top-1 size-[24px] rounded-full bg-primary/30 border-4 border-background-light dark:border-background-dark">
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="w-16 h-24 rounded-lg overflow-hidden shrink-0 border border-primary/20">
+                                        <img class="w-full h-full object-cover" data-alt="Space odyssey movie theme"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDju2_wnpzYsPBpEvgscE6LGXxVNxuJyKTryfYY6lGaKPOe7eGRQG2uHEigQhTmbStN5MvmW38pohUQX4SP3Sb4vNoYv-h_T1Kfle4e7QVZjx7KakFfqFkMmV3m_Zsi8CI2AcFfZBaVWekuqvsfiYnwuT_oHQKdvBNJL2aaT9yY0TjK-YIVTe3tmli9Og-HEX1Jaf9Inny-X4g2K3d3aYsCewAmKa-M6WULnFKHefwGQC1UvRxY6PINU0bDYk8-uW2uavvpY8J4oR8" />
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-bold">Commented on <span class="text-primary">Blade Runner
+                                                2049</span></p>
+                                        <p class="text-sm text-slate-500 italic">"The cinematography in this is
+                                            unmatched..."</p>
+                                        <p class="text-xs text-slate-400 mt-1">2 days ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Favorite Genres -->
+                    <section class="bg-white dark:bg-primary/5 p-8 rounded-xl border border-primary/10">
+                        <h3 class="text-xl font-bold mb-6">Favorite Genres</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <div
+                                class="px-6 py-4 rounded-xl bg-primary/20 border border-primary/30 flex-1 min-w-[140px] text-center">
+                                <span class="material-symbols-outlined text-primary mb-2">rocket_launch</span>
+                                <p class="font-bold">Sci-Fi</p>
+                                <p class="text-xs text-primary/60">420 Movies</p>
+                            </div>
+                            <div
+                                class="px-6 py-4 rounded-xl bg-primary/10 border border-primary/20 flex-1 min-w-[140px] text-center">
+                                <span class="material-symbols-outlined text-primary mb-2">masks</span>
+                                <p class="font-bold">Cyberpunk</p>
+                                <p class="text-xs text-primary/60">312 Movies</p>
+                            </div>
+                            <div
+                                class="px-6 py-4 rounded-xl bg-primary/10 border border-primary/20 flex-1 min-w-[140px] text-center">
+                                <span class="material-symbols-outlined text-primary mb-2">visibility</span>
+                                <p class="font-bold">Neo-Noir</p>
+                                <p class="text-xs text-primary/60">245 Movies</p>
+                            </div>
+                            <div
+                                class="px-6 py-4 rounded-xl bg-primary/10 border border-primary/20 flex-1 min-w-[140px] text-center">
+                                <span class="material-symbols-outlined text-primary mb-2">warning</span>
+                                <p class="font-bold">Thriller</p>
+                                <p class="text-xs text-primary/60">189 Movies</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <!-- Right Column: Quick Settings -->
+                <div class="space-y-8">
+                    <section class="bg-white dark:bg-primary/5 p-8 rounded-xl border border-primary/10 sticky top-28">
+                        <h3 class="text-xl font-bold mb-6">Quick Settings</h3>
+                        <div class="space-y-4">
+                            <a class="flex items-center justify-between p-4 rounded-xl bg-primary/5 hover:bg-primary/10 transition-colors group"
+                                href="#">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-primary">person</span>
+                                    <span class="font-medium">Account Details</span>
+                                </div>
+                                <span
+                                    class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">chevron_right</span>
+                            </a>
+                            <a class="flex items-center justify-between p-4 rounded-xl bg-primary/5 hover:bg-primary/10 transition-colors group"
+                                href="#">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-primary">lock</span>
+                                    <span class="font-medium">Privacy &amp; Security</span>
+                                </div>
+                                <span
+                                    class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">chevron_right</span>
+                            </a>
+                            <a class="flex items-center justify-between p-4 rounded-xl bg-primary/5 hover:bg-primary/10 transition-colors group"
+                                href="#">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-primary">card_membership</span>
+                                    <div class="flex flex-col">
+                                        <span class="font-medium">Subscription</span>
+                                        <span class="text-xs text-slate-500">Free Tier</span>
+                                    </div>
+                                </div>
+                                <span
+                                    class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">chevron_right</span>
+                            </a>
+                            <a class="flex items-center justify-between p-4 rounded-xl bg-primary/5 hover:bg-primary/10 transition-colors group"
+                                href="#">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-primary">palette</span>
+                                    <span class="font-medium">Appearance</span>
+                                </div>
+                                <span
+                                    class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">chevron_right</span>
+                            </a>
+                            <hr class="border-primary/10 my-4" />
+                            <button id="signOutBtn"
+                                class="w-full flex items-center justify-center gap-2 p-4 rounded-xl text-red-500 hover:bg-red-500/10 transition-colors font-bold">
+                                <span class="material-symbols-outlined">logout</span>
+                                Sign Out
+                            </button>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </main>
+        <footer class="mt-auto py-10 px-6 lg:px-20 border-t border-primary/10">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-2 text-primary opacity-60">
+                    <span class="material-symbols-outlined">movie_filter</span>
+                    <span class="font-bold">CineHub 2.0</span>
+                </div>
+                <p class="text-sm text-slate-500">© 2024 CineHub. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a class="text-slate-500 hover:text-primary transition-colors" href="#">Terms</a>
+                    <a class="text-slate-500 hover:text-primary transition-colors" href="#">Privacy</a>
+                    <a class="text-slate-500 hover:text-primary transition-colors" href="#">Support</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script>
+        // Authentication check
+        if (!localStorage.getItem('cinehub_token')) {
+            window.location.href = '../index.html';
+        }
+
+        if (localStorage.getItem('isAdmin') !== 'true') {
+            document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+        }
+
+        document.getElementById('signOutBtn').onclick = () => {
+            TMDB.logout();
+        };
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Sync profile data
+            await TMDB.loadUserProfile();
+
+            // Render local stats
+            renderProfileStats();
+        });
+
+        async function renderProfileStats() {
+            if (typeof TMDB === 'undefined') return;
+
+            try {
+                const watchlist = await TMDB.getWatchlist();
+
+                // Page-specific KPI Stats
+                const watchlistCount = watchlist.length;
+                const watchlistEl = document.getElementById('total-watchlist-count');
+                if (watchlistEl) watchlistEl.textContent = watchlistCount;
+
+                const watchedEl = document.getElementById('total-watched-count');
+                if (watchedEl) {
+                    const watchedCount = 42; // Example static count or could be fetched
+                    watchedEl.textContent = watchedCount;
+                }
+
+                const ratingEl = document.getElementById('total-average-rating');
+                if (ratingEl) {
+                    ratingEl.textContent = "N/A"; // Simplified for now
+                }
+
+                // Recent Activity Mapping (Mocking from watchlist for now)
+                const activityContainer = document.querySelector('.space-y-6');
+                if (watchlist.length > 0) {
+                    // Just show the most recent item added to watchlist as activity
+                    const lastMovie = watchlist[watchlist.length - 1];
+                    // (Keep existing static items as placeholders or clear and dynamic)
+                }
+            } catch (err) {
+                console.error('Failed to load profile stats:', err);
+            }
+        }
+    </script>
+</body>
+
+</html>

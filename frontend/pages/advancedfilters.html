@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>CineHub 2.0 - Movies Explorer</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#1a120e",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.25rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass {
+            background: rgba(236, 91, 19, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(236, 91, 19, 0.1);
+        }
+
+        .movie-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #ec5b1344;
+            border-radius: 10px;
+        }
+    </style>
+    <script src="../js/api.js"></script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+        <header
+            class="sticky top-0 z-50 w-full border-b border-primary/10 bg-background-dark/80 backdrop-blur-md px-6 py-3 lg:px-12">
+            <div class="mx-auto flex max-w-7xl items-center justify-between gap-8">
+                <div class="flex items-center gap-10">
+                    <div class="flex items-center gap-3 text-primary">
+                        <span class="material-symbols-outlined text-3xl font-bold">movie_filter</span>
+                        <h2 class="text-xl font-bold tracking-tight">CineHub 2.0</h2>
+                    </div>
+                    <nav class="hidden items-center gap-8 lg:flex">
+                        <a class="text-sm font-medium transition-colors hover:text-primary"
+                            href="homedashboard.html">Home</a>
+                        <a class="text-sm font-bold text-primary" href="advancedfilters.html">Movies</a>
+                        <a class="text-sm font-medium transition-colors hover:text-primary"
+                            href="watchlist.html">Watchlist</a>
+                        <a class="text-sm font-medium transition-colors hover:text-primary admin-only"
+                            href="analyticsdashboard.html">Analytics</a>
+                        <script>
+                            if (localStorage.getItem('isAdmin') !== 'true') {
+                                document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+                            }
+                        </script>
+                    </nav>
+                </div>
+                <div class="flex flex-1 items-center justify-end gap-6">
+                    <div class="relative hidden w-full max-w-md md:block">
+                        <div
+                            class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-primary/60">
+                            <span class="material-symbols-outlined text-xl">search</span>
+                        </div>
+                        <input id="search-input"
+                            class="h-10 w-full rounded-xl border-none bg-primary/10 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/50 dark:placeholder-primary/40"
+                            placeholder="Search movies..." type="text" />
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="TMDB.sharePage()"
+                            class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 transition-colors hover:bg-primary/20">
+                            <span class="material-symbols-outlined text-xl">share</span>
+                        </button>
+                        <button
+                            class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 transition-colors hover:bg-primary/20">
+                            <span class="material-symbols-outlined text-xl">notifications</span>
+                        </button>
+                        <a href="profilepage.html"
+                            class="h-10 w-10 rounded-full border-2 border-primary overflow-hidden hover:opacity-80 transition-opacity user-avatar-link">
+                            <img alt="User Profile" class="h-full w-full object-cover"
+                                data-alt="Close up portrait of a smiling young person"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbG2oBeD-zH7v1henjw2cSPcd4V39iZMY2CD0o21g7yglJlVb2LPUM_XboGjIavBMbDeLurmFjrSpbmvukrTyDT7azciRlY_5xEmH-lVXEJmZLBWUmMYlq9w_HK9YXdn04rg7ebZo22MNhnjCdhCzHVecEiRQACdpD4PJ9UOn-fYzQA447VuTyzMinsEJ74vArQZ5GTRD_H2OcdqNXuPk5OcGG2RQrdo_Y3wYHmV2XbLMRogGGHq9UVJk8bEzSjyd11yesOosb-vc" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="mx-auto flex w-full max-w-7xl flex-1 gap-6 p-6 lg:px-12">
+            <aside
+                class="custom-scrollbar sticky top-24 hidden h-[calc(100vh-120px)] w-72 flex-col gap-8 overflow-y-auto pr-2 lg:flex">
+                <section>
+                    <div class="mb-4 flex items-center justify-between">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-primary/70">Advanced Filters</h3>
+                        <button id="reset-filters"
+                            class="text-xs font-medium text-primary hover:underline">Reset</button>
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <p class="mb-3 flex items-center gap-2 text-sm font-semibold">
+                                <span class="material-symbols-outlined text-lg">category</span> Genre
+                            </p>
+                            <div id="genre-container" class="flex flex-wrap gap-2">
+                                <!-- Dynamic Genres -->
+                            </div>
+                        </div>
+                        <div>
+                            <div class="mb-3 flex items-center justify-between">
+                                <p class="flex items-center gap-2 text-sm font-semibold">
+                                    <span class="material-symbols-outlined text-lg">calendar_month</span> Year
+                                </p>
+                                <span id="year-value" class="text-xs text-primary">2024</span>
+                            </div>
+                            <input id="year-filter"
+                                class="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-primary/20 accent-primary"
+                                max="2024" min="1990" step="1" type="range" value="2024" />
+                        </div>
+                        <div>
+                            <div class="mb-3 flex items-center justify-between">
+                                <p class="flex items-center gap-2 text-sm font-semibold">
+                                    <span class="material-symbols-outlined text-lg">star</span> Min Rating
+                                </p>
+                                <span id="rating-value" class="text-xs text-primary">7.5+</span>
+                            </div>
+                            <input id="rating-filter"
+                                class="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-primary/20 accent-primary"
+                                max="10" min="0" step="0.5" type="range" value="7.5" />
+                        </div>
+                        <div>
+                            <p class="mb-3 flex items-center gap-2 text-sm font-semibold">
+                                <span class="material-symbols-outlined text-lg">language</span> Language
+                            </p>
+                            <select id="language-filter"
+                                class="w-full rounded-xl border-none bg-primary/10 py-2 pl-3 pr-8 text-sm focus:ring-1 focus:ring-primary text-slate-900 dark:text-slate-100 bg-white dark:bg-background-dark">
+                                <option value="en">English</option>
+                                <option value="te">Telugu</option>
+                                <option value="hi">Hindi</option>
+                                <option value="es">Spanish</option>
+                                <option value="ja">Japanese</option>
+                                <option value="ko">Korean</option>
+                                <option value="fr">French</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p class="mb-3 flex items-center gap-2 text-sm font-semibold">
+                                <span class="material-symbols-outlined text-lg">sort</span> Sort By
+                            </p>
+                            <div class="space-y-2">
+                                <label class="flex cursor-pointer items-center gap-3 text-sm">
+                                    <input checked=""
+                                        class="sort-radio h-4 w-4 border-primary/30 bg-transparent text-primary focus:ring-primary/50"
+                                        name="sort" type="radio" value="popularity.desc" />
+                                    Popularity
+                                </label>
+                                <label class="flex cursor-pointer items-center gap-3 text-sm">
+                                    <input
+                                        class="sort-radio h-4 w-4 border-primary/30 bg-transparent text-primary focus:ring-primary/50"
+                                        name="sort" type="radio" value="primary_release_date.desc" />
+                                    Release Date
+                                </label>
+                                <label class="flex cursor-pointer items-center gap-3 text-sm">
+                                    <input
+                                        class="sort-radio h-4 w-4 border-primary/30 bg-transparent text-primary focus:ring-primary/50"
+                                        name="sort" type="radio" value="vote_average.desc" />
+                                    User Rating
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </aside>
+            <div class="flex-1 space-y-6">
+                <div class="flex items-center justify-between">
+                    <h1 class="text-2xl font-bold">Trending Movies</h1>
+                    <div class="flex items-center gap-2">
+                        <button
+                            class="flex items-center gap-1 rounded-lg bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary transition-colors hover:bg-primary/20 lg:hidden">
+                            <span class="material-symbols-outlined text-base">filter_list</span> Filters
+                        </button>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">Showing 124 titles</p>
+                    </div>
+                </div>
+                <div id="movie-grid" class="grid grid-cols-2 gap-6 sm:grid-cols-3 xl:grid-cols-4">
+                    <!-- Dynamic Movies -->
+                </div>
+                <div class="flex flex-col items-center justify-center py-12">
+                    <div class="flex items-center gap-4 text-primary/40">
+                        <div class="h-1 w-12 rounded-full bg-current"></div>
+                        <div class="animate-pulse">
+                            <span class="material-symbols-outlined text-2xl">autorenew</span>
+                        </div>
+                        <div class="h-1 w-12 rounded-full bg-current"></div>
+                    </div>
+                    <p class="mt-4 text-sm font-medium text-slate-500">Loading more great stories...</p>
+                </div>
+            </div>
+        </main>
+        <footer class="border-t border-primary/10 bg-background-dark py-8 px-6 lg:px-12">
+            <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 md:flex-row">
+                <div class="flex items-center gap-2 text-primary/70">
+                    <span class="material-symbols-outlined text-2xl">movie_filter</span>
+                    <span class="text-sm font-bold">CineHub 2.0</span>
+                </div>
+                <div class="flex gap-8 text-xs font-medium text-slate-500">
+                    <a class="hover:text-primary" href="#">Privacy Policy</a>
+                    <a class="hover:text-primary" href="#">Terms of Service</a>
+                    <a class="hover:text-primary border-r border-slate-700 pr-6" href="#">Help Center</a>
+                    <a onclick="TMDB.sharePage()" class="hover:text-primary flex items-center gap-1 cursor-pointer"
+                        href="javascript:void(0)">
+                        <span class="material-symbols-outlined text-sm">share</span> Share
+                    </a>
+                </div>
+                <p class="text-xs text-slate-600">© 2024 CineHub. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <script>
+        let selectedGenreId = null;
+        let searchQuery = "";
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Admin Check
+            if (localStorage.getItem('isAdmin') !== 'true') {
+                document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+            }
+
+            // Initialize Genres
+            const genreResp = await TMDB.getGenres();
+            const genreContainer = document.getElementById('genre-container');
+            if (genreResp && genreResp.genres) {
+                genreResp.genres.slice(0, 10).forEach(genre => {
+                    const btn = document.createElement('button');
+                    btn.className = "genre-btn rounded-lg bg-primary/10 px-3 py-1.5 text-xs font-medium hover:bg-primary/20 transition-colors";
+                    btn.textContent = genre.name;
+                    btn.dataset.id = genre.id;
+                    btn.onclick = () => {
+                        if (selectedGenreId === genre.id) {
+                            selectedGenreId = null;
+                            btn.classList.replace('bg-primary', 'bg-primary/10');
+                            btn.classList.remove('text-white');
+                        } else {
+                            document.querySelectorAll('.genre-btn').forEach(b => {
+                                b.classList.replace('bg-primary', 'bg-primary/10');
+                                b.classList.remove('text-white');
+                            });
+                            btn.classList.replace('bg-primary/10', 'bg-primary');
+                            btn.classList.add('text-white');
+                            selectedGenreId = genre.id;
+                        }
+                        loadMovies();
+                    };
+                    genreContainer.appendChild(btn);
+                });
+            }
+
+            // Filter Event Listeners
+            document.getElementById('year-filter').addEventListener('input', (e) => {
+                document.getElementById('year-value').textContent = e.target.value;
+                loadMovies();
+            });
+            document.getElementById('rating-filter').addEventListener('input', (e) => {
+                document.getElementById('rating-value').textContent = e.target.value + '+';
+                loadMovies();
+            });
+            document.getElementById('language-filter').addEventListener('change', loadMovies);
+
+            document.querySelectorAll('.sort-radio').forEach(radio => {
+                radio.addEventListener('change', loadMovies);
+            });
+
+            document.getElementById('reset-filters').addEventListener('click', () => {
+                selectedGenreId = null;
+                searchQuery = "";
+                document.getElementById('search-input').value = "";
+                document.getElementById('year-filter').value = 2024;
+                document.getElementById('year-value').textContent = "2024";
+                document.getElementById('rating-filter').value = 7.5;
+                document.getElementById('rating-value').textContent = "7.5+";
+                document.getElementById('language-filter').value = "en";
+                document.querySelector('input[value="popularity.desc"]').checked = true;
+                document.querySelectorAll('.genre-btn').forEach(b => {
+                    b.classList.replace('bg-primary', 'bg-primary/10');
+                    b.classList.remove('text-white');
+                });
+                loadMovies();
+            });
+
+            // Search Logic
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', debounce(async (e) => {
+                searchQuery = e.target.value.trim();
+                loadMovies();
+            }, 500));
+
+            // Initial Load
+            loadMovies();
+        });
+
+        async function loadMovies() {
+            const movieGrid = document.getElementById('movie-grid');
+            movieGrid.innerHTML = '<div class="col-span-full py-20 text-center opacity-50"><span class="animate-spin inline-block mr-2">⏳</span> Searching for cinematic gems...</div>';
+
+            let movies = [];
+            if (searchQuery) {
+                const resp = await TMDB.searchMovies(searchQuery);
+                movies = (resp && resp.results) ? resp.results : [];
+            } else {
+                const params = {
+                    page: 1,
+                    include_adult: false
+                };
+
+                const sortVal = document.querySelector('.sort-radio:checked').value;
+                params.sort_by = sortVal;
+
+                if (selectedGenreId) params.with_genres = selectedGenreId;
+
+                const year = document.getElementById('year-filter').value;
+                if (year) params.primary_release_year = year;
+
+                const rating = document.getElementById('rating-filter').value;
+                if (rating) params['vote_average.gte'] = rating;
+
+                const lang = document.getElementById('language-filter').value;
+                if (lang) params.with_original_language = lang;
+
+                const resp = await TMDB.discoverMovies(params);
+                movies = (resp && resp.results) ? resp.results : [];
+            }
+
+            movieGrid.innerHTML = '';
+            if (movies.length === 0) {
+                movieGrid.innerHTML = '<div class="col-span-full py-20 text-center opacity-50">No movies found mapping your filters. Try adjusting them!</div>';
+                return;
+            }
+
+            movies.forEach(movie => {
+                const card = createFilterCard(movie);
+                movieGrid.appendChild(card);
+            });
+        }
+
+        function createFilterCard(movie) {
+            const div = document.createElement('div');
+            div.className = "movie-card group relative overflow-hidden rounded-2xl bg-primary/5 transition-all duration-300";
+            div.innerHTML = `
+                <div class="aspect-[2/3] w-full overflow-hidden">
+                    <img src="${TMDB.IMG_URL}${movie.poster_path}" alt="${movie.title}"
+                        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                </div>
+                <div class="glass absolute inset-0 flex flex-col justify-end p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <div class="flex items-center gap-2 text-primary">
+                        <span class="material-symbols-outlined text-sm font-fill">star</span>
+                        <span class="text-sm font-bold">${movie.vote_average.toFixed(1)}</span>
+                    </div>
+                    <h4 class="mt-1 text-base font-bold text-white truncate" title="${movie.title}">${movie.title}</h4>
+                    <p class="text-xs text-white/70">${movie.release_date ? movie.release_date.split('-')[0] : 'N/A'}</p>
+                    <button onclick="window.location.href='movieDetails.html?id=${movie.id}'"
+                        class="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-2 text-sm font-bold text-white transition-transform active:scale-95">
+                        <span class="material-symbols-outlined text-lg">info</span> Details
+                    </button>
+                </div>
+            `;
+            return div;
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function (...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>CineHub 2.0 - Unlimited Movies &amp; TV Shows</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#120a07",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(to top, #120a07 0%, rgba(18, 10, 7, 0.7) 50%, rgba(18, 10, 7, 0.4) 100%);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <div class="relative min-h-screen flex flex-col overflow-x-hidden">
+        <!-- Sticky Navigation -->
+        <header class="fixed top-0 z-50 w-full glass-effect border-b border-primary/10">
+            <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+                <div class="flex items-center gap-2 text-primary">
+                    <span class="material-symbols-outlined text-4xl font-bold">movie</span>
+                    <h2 class="text-2xl font-black tracking-tighter uppercase italic">CineHub 2.0</h2>
+                </div>
+
+                <nav class="hidden md:flex items-center gap-10">
+                    <a class="text-sm font-semibold hover:text-primary transition-colors"
+                        href="pages/loginpage.html">Movies</a>
+                    <a class="text-sm font-semibold hover:text-primary transition-colors" href="pages/loginpage.html">TV
+                        Shows</a>
+                    <a class="text-sm font-semibold hover:text-primary transition-colors" href="pages/loginpage.html">My
+                        List</a>
+                </nav>
+
+                <div class="flex items-center gap-4">
+                    <button onclick="window.location.href='pages/loginpage.html'"
+                        class="px-6 py-2.5 bg-primary text-white rounded-lg font-bold text-sm hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+                        Sign In
+                    </button>
+                </div>
+            </div>
+        </header>
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center justify-center pt-20 px-6">
+            <div class="absolute inset-0 z-0">
+                <div class="absolute inset-0 hero-gradient z-10"></div>
+                <img alt="Cinematic Background" class="w-full h-full object-cover"
+                    data-alt="Cinematic collage of movie posters and film strips"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNH7cknlwoxJtcUOYerC2d6mcX58bNFCDUuwozJusBXLtzvLmDlhvBhQpjzBFUNDWLjUdH8un5Baxsz05-P1q3Ps01bnlehm-0m2xy5RUvDdZH4tViNcZ_gCa6CkCH1He_FfH0j34OQ44_KyTiWL39Sr0gVgGBlNhmgP8P2K1-NfJ8EnENkEKwdqf7VR87VeLEG853pN8u8_hvq6pyffXvvy_SdfBULZQhCNiKf9xbMJoOgeqR5WKFtYzvGZB4arM29Gmn2LCUv5o" />
+            </div>
+            <div class="relative z-20 max-w-4xl w-full text-center space-y-8 @container">
+                <div class="space-y-4">
+                    <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-[1.1] text-white">
+                        Unlimited movies, <br />
+                        <span class="text-primary">TV shows</span>, and more.
+                    </h1>
+                    <p class="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto font-medium">
+                        Watch anywhere. Cancel anytime—wait, you don't even need to cancel because it's completely free!
+                        Ready to dive into a world of entertainment?
+                    </p>
+                </div>
+                <div class="max-w-2xl mx-auto">
+                    <form class="flex flex-col md:flex-row gap-3">
+                        <div class="flex-grow relative group">
+                            <span
+                                class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">mail</span>
+                            <input
+                                class="w-full h-14 md:h-16 pl-12 pr-4 rounded-xl bg-background-dark/80 border border-slate-700 text-white placeholder:text-slate-500 focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none"
+                                placeholder="Email address" type="email" />
+                        </div>
+                        <button type="button" onclick="window.location.href='pages/signuppage.html'"
+                            class="h-14 md:h-16 px-10 bg-primary text-white text-lg font-black rounded-xl hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-primary/30 flex items-center justify-center gap-2 whitespace-nowrap">
+                            Get Started
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </form>
+                    <p class="mt-4 text-sm text-slate-400">Enter your email to create or restart your membership.</p>
+                </div>
+            </div>
+        </section>
+        <!-- Features Section -->
+        <section class="relative z-20 py-24 px-6 bg-background-light dark:bg-background-dark">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-16 space-y-4">
+                    <h2 class="text-3xl md:text-5xl font-black tracking-tight">Enjoy on your terms</h2>
+                    <p class="text-slate-600 dark:text-slate-400 text-lg max-w-2xl">Experience the next generation of
+                        streaming with features designed for true cinephiles.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="glass-effect p-8 rounded-2xl group hover:border-primary/50 transition-all">
+                        <div
+                            class="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-primary text-3xl">devices</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Watch on any device</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">Stream on your phone, tablet,
+                            laptop, and TV without paying more. Optimized for 4K HDR across all screens.</p>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="glass-effect p-8 rounded-2xl group hover:border-primary/50 transition-all">
+                        <div
+                            class="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-primary text-3xl">download</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Download to watch offline</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">Save your favorites easily and
+                            always have something to watch, even without an internet connection.</p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="glass-effect p-8 rounded-2xl group hover:border-primary/50 transition-all">
+                        <div
+                            class="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-primary text-3xl">auto_awesome</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Personalized recommendations</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">Our advanced AI learns your taste
+                            to suggest hidden gems and blockbuster hits you're guaranteed to love.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ Section -->
+        <section class="py-24 px-6 bg-slate-100 dark:bg-[#1a0f0a]">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-black text-center mb-12">Frequently Asked Questions</h2>
+                <div class="space-y-4">
+                    <details class="group glass-effect rounded-xl overflow-hidden" open="">
+                        <summary
+                            class="flex items-center justify-between p-6 cursor-pointer list-none bg-white/5 hover:bg-white/10 transition-colors">
+                            <span class="text-lg font-bold">What is CineHub 2.0?</span>
+                            <span
+                                class="material-symbols-outlined group-open:rotate-180 transition-transform text-primary">expand_more</span>
+                        </summary>
+                        <div
+                            class="p-6 pt-0 text-slate-600 dark:text-slate-400 leading-relaxed border-t border-white/5">
+                            CineHub 2.0 is a premium streaming service that offers a massive library of award-winning TV
+                            shows, movies, anime, documentaries, and exclusive originals on thousands of
+                            internet-connected devices.
+                        </div>
+                    </details>
+                    <details class="group glass-effect rounded-xl overflow-hidden">
+                        <summary
+                            class="flex items-center justify-between p-6 cursor-pointer list-none bg-white/5 hover:bg-white/10 transition-colors">
+                            <span class="text-lg font-bold">How much does it cost?</span>
+                            <span
+                                class="material-symbols-outlined group-open:rotate-180 transition-transform text-primary">expand_more</span>
+                        </summary>
+                        <div
+                            class="p-6 pt-0 text-slate-600 dark:text-slate-400 leading-relaxed border-t border-white/5">
+                            CineHub 2.0 is completely free of cost. Our mission is to provide premium entertainment to
+                            everyone. No subscription fees, no secondary layers—just see and enjoy your favorite
+                            content.
+                        </div>
+                    </details>
+                    <details class="group glass-effect rounded-xl overflow-hidden">
+                        <summary
+                            class="flex items-center justify-between p-6 cursor-pointer list-none bg-white/5 hover:bg-white/10 transition-colors">
+                            <span class="text-lg font-bold">Where can I watch?</span>
+                            <span
+                                class="material-symbols-outlined group-open:rotate-180 transition-transform text-primary">expand_more</span>
+                        </summary>
+                        <div
+                            class="p-6 pt-0 text-slate-600 dark:text-slate-400 leading-relaxed border-t border-white/5">
+                            Watch anywhere, anytime. Sign in with your CineHub account to watch instantly on the web at
+                            cinehub.com from your personal computer or on any internet-connected device that offers the
+                            CineHub app.
+                        </div>
+                    </details>
+                    <details class="group glass-effect rounded-xl overflow-hidden">
+                        <summary
+                            class="flex items-center justify-between p-6 cursor-pointer list-none bg-white/5 hover:bg-white/10 transition-colors">
+                            <span class="text-lg font-bold">Is CineHub good for kids?</span>
+                            <span
+                                class="material-symbols-outlined group-open:rotate-180 transition-transform text-primary">expand_more</span>
+                        </summary>
+                        <div
+                            class="p-6 pt-0 text-slate-600 dark:text-slate-400 leading-relaxed border-t border-white/5">
+                            The CineHub Kids experience is included in your membership to give parents control while
+                            kids enjoy family-friendly TV shows and movies in their own space.
+                        </div>
+                    </details>
+                </div>
+                <div class="mt-16 text-center space-y-6">
+                    <p class="text-lg font-medium">Ready to watch? Enter your email to create your account.</p>
+                    <div class="max-w-2xl mx-auto flex flex-col md:flex-row gap-3">
+                        <input
+                            class="flex-grow h-14 px-6 rounded-xl bg-white dark:bg-slate-800 border-none ring-1 ring-slate-300 dark:ring-slate-700 focus:ring-2 focus:ring-primary outline-none"
+                            placeholder="Email address" type="email" />
+                        <button
+                            class="h-14 px-8 bg-primary text-white font-bold rounded-xl hover:bg-primary/90 transition-all shadow-lg">
+                            Get Started
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer -->
+        <footer class="py-12 px-6 border-t border-slate-200 dark:border-slate-800">
+            <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2 text-primary opacity-80">
+                        <span class="material-symbols-outlined text-2xl font-bold">movie</span>
+                        <h2 class="text-lg font-black tracking-tighter uppercase italic">CineHub</h2>
+                    </div>
+                    <p class="text-xs text-slate-500">© 2024 CineHub 2.0. All rights reserved.</p>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="font-bold text-sm">Legal</h4>
+                    <ul class="space-y-2 text-sm text-slate-500">
+                        <li><a class="hover:text-primary" href="#">Privacy Policy</a></li>
+                        <li><a class="hover:text-primary" href="#">Terms of Use</a></li>
+                        <li><a class="hover:text-primary" href="#">Cookie Preferences</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="font-bold text-sm">Help</h4>
+                    <ul class="space-y-2 text-sm text-slate-500">
+                        <li><a class="hover:text-primary" href="#">Help Center</a></li>
+                        <li><a class="hover:text-primary" href="#">Account</a></li>
+                        <li><a class="hover:text-primary" href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="font-bold text-sm">Follow Us</h4>
+                    <div class="flex gap-4">
+                        <a onclick="TMDB.sharePage()"
+                            class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-all cursor-pointer"
+                            href="javascript:void(0)">
+                            <span class="material-symbols-outlined text-sm">public</span>
+                        </a>
+                        <a onclick="TMDB.sharePage()"
+                            class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-all cursor-pointer"
+                            href="javascript:void(0)">
+                            <span class="material-symbols-outlined text-sm">smart_display</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="js/api.js"></script>
+</body>
+
+</html>

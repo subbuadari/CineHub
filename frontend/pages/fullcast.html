@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Poppins", "Public Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(236, 91, 19, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(236, 91, 19, 0.1);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(180deg, rgba(34, 22, 16, 0.7) 0%, rgba(34, 22, 16, 1) 100%);
+        }
+    </style>
+    <script src="../js/api.js"></script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+    <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+        <!-- Top Navigation -->
+        <header
+            class="sticky top-0 z-50 w-full border-b border-primary/20 bg-background-dark/80 backdrop-blur-md px-6 md:px-20 py-4">
+            <div class="max-w-7xl mx-auto flex items-center justify-between gap-8">
+                <div class="flex items-center gap-12">
+                    <div class="flex items-center gap-3 text-primary">
+                        <span class="material-symbols-outlined text-3xl font-bold">movie_filter</span>
+                        <h2 class="text-slate-100 text-xl font-bold tracking-tight">CineHub 2.0</h2>
+                    </div>
+                    <nav class="hidden md:flex items-center gap-8">
+                        <a class="text-slate-300 hover:text-primary transition-colors text-sm font-medium"
+                            href="homedashboard.html">Home</a>
+                        <a class="text-slate-300 hover:text-primary transition-colors text-sm font-medium"
+                            href="advancedfilters.html">Movies</a>
+                        <a class="text-slate-300 hover:text-primary transition-colors text-sm font-medium"
+                            href="watchlist.html">My List</a>
+                    </nav>
+                </div>
+                <div class="flex flex-1 justify-end items-center gap-6">
+                    <label class="hidden lg:flex relative w-64">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-primary/60">
+                            <span class="material-symbols-outlined text-xl">search</span>
+                        </span>
+                        <input
+                            class="w-full rounded-xl bg-primary/10 border-primary/20 text-slate-100 placeholder:text-primary/40 focus:ring-primary focus:border-primary pl-10 py-2 text-sm"
+                            placeholder="Search actors, crew..." />
+                    </label>
+                    <div class="flex gap-3">
+                        <button
+                            class="flex items-center justify-center rounded-xl size-10 bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined">notifications</span>
+                        </button>
+                        <div class="size-10 rounded-full border-2 border-primary/30 overflow-hidden">
+                            <img class="w-full h-full object-cover" data-alt="User profile avatar smiling"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN2TOXizuNx04Ybqekod1ix8bknotQis99oETXcnYvAr5OYqXWqWw3ahf3q-g0MUEkq88QSS0MI-OQttbK9c8QIqdLn7zz1XsNkAa4sjqft_AtNus-ejqkGHUHTF4Tcar02DY4yLX_ykbJgIEWlozXbUPSHGFTISe_DOgCu2SVVB3PCvE-F6yzTAIYGBaOvoIfBlJ6CEKtQjyAiFgJT6rYEVLRuz4KbBhuQZTuOAmOGS4AXM2ns6jnnummTAfGlkNW-wfT_LyeSn8" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="flex-1 w-full max-w-7xl mx-auto px-6 md:px-20 py-8">
+            <!-- Movie Banner Summary -->
+            <div class="relative w-full h-[300px] rounded-3xl overflow-hidden mb-12 group">
+                <img id="movie-backdrop" class="absolute inset-0 w-full h-full object-cover" src=""
+                    alt="Movie Backdrop" />
+                <div class="absolute inset-0 hero-gradient"></div>
+                <div class="absolute inset-0 p-8 flex flex-col justify-end">
+                    <button onclick="history.back()"
+                        class="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-6 font-semibold">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                        <span>Back to Movie</span>
+                    </button>
+                    <h1 class="text-4xl md:text-6xl font-bold text-slate-100 mb-2"><span id="movie-title"></span> <span
+                            id="movie-year" class="text-primary/80 font-light text-2xl md:text-4xl"></span></h1>
+                    <p id="movie-info" class="text-slate-400 max-w-2xl"></p>
+                </div>
+            </div>
+            <!-- Cast Grid -->
+            <section class="mb-16">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center gap-3">
+                        <div class="h-8 w-1 bg-primary rounded-full"></div>
+                        <!-- Department: Camera & Lighting -->
+                        <div class="space-y-4">
+                            <h4 class="text-primary font-bold text-lg border-b border-primary/20 pb-2">Camera</h4>
+                            <div class="flex items-center gap-4 glass-card p-3 rounded-xl">
+                                <div
+                                    class="size-12 rounded-lg overflow-hidden bg-primary/20 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">photo_camera</span>
+                                </div>
+                                <div>
+                                    <p class="text-slate-100 font-bold text-sm">Hoyte van Hoytema</p>
+                                    <p class="text-slate-400 text-xs">Director of Photography</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Department: Art & Design -->
+                        <div class="space-y-4">
+                            <h4 class="text-primary font-bold text-lg border-b border-primary/20 pb-2">Art &amp; Design
+                            </h4>
+                            <div class="flex items-center gap-4 glass-card p-3 rounded-xl">
+                                <div
+                                    class="size-12 rounded-lg overflow-hidden bg-primary/20 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">architecture</span>
+                                </div>
+                                <div>
+                                    <p class="text-slate-100 font-bold text-sm">Nathan Crowley</p>
+                                    <p class="text-slate-400 text-xs">Production Design</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Department: Sound -->
+                        <div class="space-y-4">
+                            <h4 class="text-primary font-bold text-lg border-b border-primary/20 pb-2">Sound</h4>
+                            <div class="flex items-center gap-4 glass-card p-3 rounded-xl">
+                                <div
+                                    class="size-12 rounded-lg overflow-hidden bg-primary/20 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">music_note</span>
+                                </div>
+                                <div>
+                                    <p class="text-slate-100 font-bold text-sm">Hans Zimmer</p>
+                                    <p class="text-slate-400 text-xs">Original Music Composer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </section>
+        </main>
+        <!-- Footer -->
+        <footer class="mt-auto border-t border-primary/10 bg-background-dark/50 py-12 px-6">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex flex-col items-center md:items-start gap-4">
+                    <div class="flex items-center gap-2 text-primary">
+                        <span class="material-symbols-outlined text-2xl font-bold">movie_filter</span>
+                        <h2 class="text-slate-100 text-lg font-bold">CineHub 2.0</h2>
+                    </div>
+                    <p class="text-slate-400 text-sm">The ultimate database for cinema lovers.</p>
+                </div>
+                <div class="flex gap-8 text-slate-400 text-sm font-medium">
+                    <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+                    <a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+                    <a class="hover:text-primary transition-colors" href="#">Contact Us</a>
+                </div>
+                <div class="flex gap-4">
+                    <span
+                        class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary">language</span>
+                    <span onclick="TMDB.sharePage()"
+                        class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary">share</span>
+                </div>
+            </div>
+            <div class="text-center mt-12 text-slate-500 text-xs">
+                © 2024 CineHub Media Group. All rights reserved.
+            </div>
+        </footer>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const movieId = urlParams.get('id');
+
+            if (!movieId) {
+                console.error('No movie ID provided');
+                return;
+            }
+
+            try {
+                // 1. Fetch Movie Details
+                const movie = await TMDB.getMovieDetails(movieId);
+                if (movie) {
+                    document.title = `${movie.title} - Full Cast & Crew | CineHub 2.0`;
+                    document.getElementById('movie-backdrop').src = `${TMDB.BACKDROP_URL}${movie.backdrop_path}`;
+                    document.getElementById('movie-title').textContent = movie.title;
+                    document.getElementById('movie-year').textContent = `(${movie.release_date.split('-')[0]})`;
+
+                    const genres = movie.genres.map(g => g.name).join(' / ');
+                    const directors = []; // We'll get this from credits
+                    document.getElementById('movie-info').textContent = `${genres} • ${movie.runtime}m`;
+                }
+
+                // 2. Fetch Credits
+                const credits = await TMDB.getMovieCredits(movieId);
+                if (credits) {
+                    // Update Director in header
+                    const director = credits.crew.find(c => c.job === 'Director');
+                    if (director) {
+                        const info = document.getElementById('movie-info');
+                        info.textContent = `Directed by ${director.name} • ` + info.textContent;
+                    }
+
+                    // Render Cast
+                    const castGrid = document.getElementById('cast-grid');
+                    credits.cast.forEach(person => {
+                        const card = document.createElement('div');
+                        card.className = "glass-card rounded-2xl p-3 flex flex-col items-center text-center group hover:scale-105 transition-transform duration-300";
+                        card.innerHTML = `
+                            <div class="w-full aspect-[3/4] rounded-xl overflow-hidden mb-4 shadow-xl">
+                                <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" 
+                                     src="${person.profile_path ? TMDB.IMG_URL + person.profile_path : 'https://via.placeholder.com/300x450?text=No+Image'}" />
+                            </div>
+                            <h3 class="text-slate-100 font-bold text-sm leading-tight mb-1">${person.name}</h3>
+                            <p class="text-primary text-xs font-medium uppercase tracking-wider">${person.character}</p>
+                        `;
+                        castGrid.appendChild(card);
+                    });
+
+                    // Render Crew by Department
+                    const crewSections = document.getElementById('crew-sections');
+                    const departments = {};
+                    credits.crew.forEach(person => {
+                        if (!departments[person.department]) {
+                            departments[person.department] = [];
+                        }
+                        departments[person.department].push(person);
+                    });
+
+                    // Sort departments (Production, Directing, Writing first)
+                    const priority = ['Directing', 'Writing', 'Production', 'Camera', 'Art', 'Sound', 'Editing', 'Visual Effects', 'Costume & Make-Up'];
+                    const sortedDepts = Object.keys(departments).sort((a, b) => {
+                        const idxA = priority.indexOf(a);
+                        const idxB = priority.indexOf(b);
+                        if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+                        if (idxA !== -1) return -1;
+                        if (idxB !== -1) return 1;
+                        return a.localeCompare(b);
+                    });
+
+                    sortedDepts.forEach(dept => {
+                        const section = document.createElement('section');
+                        section.className = "space-y-4";
+
+                        const icon = getDeptIcon(dept);
+
+                        section.innerHTML = `
+                            <h4 class="text-primary font-bold text-lg border-b border-primary/20 pb-2">${dept}</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                ${departments[dept].map(person => `
+                                    <div class="flex items-center gap-4 glass-card p-3 rounded-xl">
+                                        <div class="size-12 rounded-lg overflow-hidden bg-primary/20 flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-primary">${icon}</span>
+                                        </div>
+                                        <div>
+                                            <p class="text-slate-100 font-bold text-sm">${person.name}</p>
+                                            <p class="text-slate-400 text-xs">${person.job}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                        crewSections.appendChild(section);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading cast & crew:', error);
+            }
+        });
+
+        function getDeptIcon(dept) {
+            const icons = {
+                'Directing': 'person',
+                'Writing': 'edit_note',
+                'Production': 'payments',
+                'Camera': 'photo_camera',
+                'Art': 'architecture',
+                'Sound': 'music_note',
+                'Editing': 'movie_edit',
+                'Visual Effects': 'auto_awesome',
+                'Costume & Make-Up': 'dry_cleaning'
+            };
+            return icons[dept] || 'groups';
+        }
+    </script>
+</body>
+
+</html>

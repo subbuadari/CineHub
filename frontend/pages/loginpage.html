@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>CineHub 2.0 | Experience the Future of Cinema</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#120a06",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.25rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(34, 22, 16, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(236, 91, 19, 0.2);
+        }
+
+        .bg-movie-overlay {
+            background: linear-gradient(to bottom, rgba(18, 10, 6, 0.4), rgba(18, 10, 6, 0.95)), url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+
+<body
+    class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex items-center justify-center p-4">
+    <!-- Background Layer -->
+    <div class="fixed inset-0 z-0 bg-movie-overlay" data-alt="Cinematic dark theater background with movie screen glow">
+    </div>
+    <!-- Main Content Container -->
+    <div class="relative z-10 w-full max-w-[480px]">
+        <!-- Glassmorphism Login Card -->
+        <div class="glass-card rounded-2xl p-8 shadow-2xl flex flex-col gap-8 border border-white/10">
+            <!-- Logo Section -->
+            <div class="flex flex-col items-center gap-2">
+                <div class="bg-primary p-3 rounded-xl shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined text-white text-4xl">movie_filter</span>
+                </div>
+                <h1
+                    class="text-3xl font-black tracking-tight mt-2 bg-gradient-to-r from-white to-primary/80 bg-clip-text text-transparent">
+                    CineHub 2.0</h1>
+                <p class="text-slate-400 text-sm font-medium">The future of cinema is here</p>
+            </div>
+            <!-- Login Form -->
+            <form class="flex flex-col gap-5">
+                <!-- Email Field -->
+                <div class="flex flex-col gap-2">
+                    <label class="text-xs font-bold uppercase tracking-widest text-primary/80 ml-1">Email
+                        Address</label>
+                    <div class="relative group">
+                        <span
+                            class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors">mail</span>
+                        <input
+                            class="w-full bg-background-dark/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300"
+                            placeholder="name@example.com" type="email" />
+                    </div>
+                </div>
+                <!-- Password Field -->
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center px-1">
+                        <label class="text-xs font-bold uppercase tracking-widest text-primary/80">Password</label>
+                        <button class="text-xs font-medium text-slate-400 hover:text-primary transition-colors"
+                            type="button">Forgot Password?</button>
+                    </div>
+                    <div class="relative group">
+                        <span
+                            class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors">lock</span>
+                        <input
+                            class="w-full bg-background-dark/50 border border-white/10 rounded-xl py-4 pl-12 pr-12 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300"
+                            placeholder="••••••••" type="password" />
+                        <button
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
+                            type="button">
+                            <span class="material-symbols-outlined">visibility</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Remember Me -->
+                <div class="flex items-center gap-3 px-1">
+                    <input
+                        class="w-5 h-5 rounded border-white/10 bg-background-dark/50 text-primary focus:ring-primary/50 focus:ring-offset-background-dark"
+                        id="remember" type="checkbox" />
+                    <label class="text-sm text-slate-300 cursor-pointer" for="remember">Stay signed in for 30
+                        days</label>
+                </div>
+                <div id="errorMsg"
+                    class="hidden bg-red-500/10 border border-red-500/20 text-red-500 text-xs p-3 rounded-lg text-center">
+                </div>
+                <!-- Sign In Button -->
+                <button id="signInBtn"
+                    class="group relative w-full bg-gradient-to-r from-primary to-[#ff8c42] py-4 rounded-xl font-bold text-white shadow-xl shadow-primary/20 hover:shadow-primary/40 active:scale-[0.98] transition-all overflow-hidden"
+                    type="button">
+                    <span class="relative z-10 flex items-center justify-center gap-2">
+                        Sign In <span
+                            class="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </span>
+                    <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                    </div>
+                </button>
+            </form>
+            <script src="../js/api.js"></script>
+            <script>
+                document.getElementById('signInBtn').addEventListener('click', async () => {
+                    const email = document.querySelector('input[type="email"]').value;
+                    const password = document.querySelector('input[type="password"]').value;
+                    const errorMsg = document.getElementById('errorMsg');
+                    const signInBtn = document.getElementById('signInBtn');
+
+                    if (!email || !password) {
+                        errorMsg.textContent = "Please fill in all fields";
+                        errorMsg.classList.remove('hidden');
+                        return;
+                    }
+
+                    try {
+                        signInBtn.disabled = true;
+                        signInBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Logging in...';
+
+                        const user = await TMDB.login(email, password);
+                        if (user.role === 'admin') {
+                            window.location.href = 'analyticsdashboard.html';
+                        } else {
+                            window.location.href = 'homedashboard.html';
+                        }
+                    } catch (err) {
+                        errorMsg.textContent = err.message || "Login failed. Please check your credentials.";
+                        errorMsg.classList.remove('hidden');
+                        signInBtn.disabled = false;
+                        signInBtn.innerHTML = 'Sign In <span class="material-symbols-outlined text-xl">arrow_forward</span>';
+                    }
+                });
+            </script>
+            </form>
+            <!-- Divider -->
+            <div class="flex items-center gap-4">
+                <div class="h-[1px] flex-1 bg-white/10"></div>
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Or connect with</span>
+                <div class="h-[1px] flex-1 bg-white/10"></div>
+            </div>
+            <!-- Social Logins -->
+            <div class="grid grid-cols-3 gap-4">
+                <button
+                    class="flex items-center justify-center py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                    <img alt="Google" class="w-6 h-6" data-alt="Google logo icon"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4rf_9nb9xIJl_b3cRYkhG4NSloFxHc7e9Yn5nnNhVqOp8yAWz2diqpKZWrF0ZZhB8uawR1E3sXnU9Caak0LAntPkB6dEFYhBaoiMKrPI9j8h4WNx9Bmpd3iXA2_QAm2BNEgauNIppbbFLc18rO0V1uqFLoo5gUEqBJAzqzz6oyffRM1ERQbVFQYYJMgYxLRyTqglqrwtpN0cX6l-qpGkeVn3-LDCUcy8Cv0H-uNVHIXlAMHm2S304BIqzP77CZsap9QrXgP3XtA4" />
+                </button>
+                <button
+                    class="flex items-center justify-center py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                    <span class="material-symbols-outlined text-white text-2xl">ios</span>
+                </button>
+                <button
+                    class="flex items-center justify-center py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                    <svg class="w-6 h-6 text-[#1877F2]" fill="currentColor" viewbox="0 0 24 24">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Footer Link -->
+            <div class="text-center pt-2">
+                <p class="text-slate-400 text-sm">
+                    New to CineHub?
+                    <a class="text-primary font-bold hover:underline underline-offset-4 ml-1"
+                        href="signuppage.html">Sign up now</a>
+                </p>
+            </div>
+        </div>
+        <!-- System Status or Trust Badges (Subtle) -->
+        <div class="flex justify-center gap-6 mt-8">
+            <div class="flex items-center gap-1.5 text-slate-500/60">
+                <span class="material-symbols-outlined text-sm">verified_user</span>
+                <span class="text-xs font-medium">Secure SSL</span>
+            </div>
+            <div class="flex items-center gap-1.5 text-slate-500/60">
+                <span class="material-symbols-outlined text-sm">cloud_done</span>
+                <span class="text-xs font-medium">Cloud Sync</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
